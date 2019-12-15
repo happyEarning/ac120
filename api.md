@@ -39,6 +39,25 @@ response:
 
 ```
 
+### 抽奖历史接口：
+
+get /api/user/histoty
+
+```javascript
+{
+  "success":true,
+  data:[
+    {
+     name:'AC米兰120周年礼物A',
+    },
+    {
+     name:'AC米兰120周年礼物B',
+    }
+  ]
+}
+
+```
+
 ### 抽奖接口
 
 get /api/user/lottery
