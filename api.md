@@ -7,6 +7,7 @@ get /api/user/get
 {
   "success":true,
   "user":{
+    "_id":12345678,
     "name":"张三",
     "telephone":15888888888,
     "times":5, // 剩余抽奖次数
@@ -24,6 +25,7 @@ post /api/user/register
 body:
 ```javascript
 {
+  "_id":12345678,
   "name":"张三",
    "telephone":15888888888,
 }
@@ -42,11 +44,61 @@ response:
 
 get /api/lottery
 
+奖品编号：
+1 谢谢参与
+2 问答卡1
+3 问答卡2
+4 问答卡3
+5 吉祥物主场球衣
+6 吉祥物客场球衣
+7 礼包奖品
+
 response:
 ```javascript
 {
    "success":true,
-    result:5, // 1 
+   recordId:1222,//记录id
+    result:5, // 奖品编号
 }
 
+or 
+
+{
+   "success":false,
+   err:{
+      message:"您抽奖的机会用完了"
+   }
+}
+```
+
+### 记录用户抽奖信息
+
+post /api/record
+
+body:
+```javascript
+{
+  name:"张三",
+  address:"上海市浦东新城区",
+  recordId;1222
+}
+```
+
+response:
+```javascript
+{
+  success:true
+}
+```
+
+### 用户点击分享
+
+post /api/share
+
+response:
+```javascript
+{
+  success:true，
+  times:2 //剩余次数
+}
 ```
