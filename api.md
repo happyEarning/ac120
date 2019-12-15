@@ -25,7 +25,6 @@ post /api/user/register
 body:
 ```javascript
 {
-  "_id":12345678,
   "name":"张三",
    "telephone":15888888888,
 }
