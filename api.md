@@ -1,6 +1,6 @@
 ### 首屏接口：
 
-get /api/user/get
+🚢 get /api/user/get
 * 返回如果包含user 首页动画效果结束后直接进入抽奖页面
 * 如果user为null,进入填写信息页面
 ```javascript
@@ -18,14 +18,13 @@ get /api/user/get
 
 ### 用户注册接口
 
-post /api/user/register
+🚢 post /api/user/register
 
 * 后端考虑重新注册的情况，如果已存在用户，则当作登录处理
 
 body:
 ```javascript
 {
-  "_id":12345678,
   "name":"张三",
    "telephone":15888888888,
 }
@@ -40,18 +39,37 @@ response:
 
 ```
 
+### 抽奖历史接口：
+
+get /api/user/history
+
+```javascript
+{
+  "success":true,
+  data:[
+    {
+     name:'AC米兰120周年礼物A',
+    },
+    {
+     name:'AC米兰120周年礼物B',
+    }
+  ]
+}
+
+```
+
 ### 抽奖接口
 
-get /api/lottery
+get /api/user/lottery
 
 奖品编号：
-1 谢谢参与
-2 问答卡1
-3 问答卡2
-4 问答卡3
-5 吉祥物主场球衣
-6 吉祥物客场球衣
-7 礼包奖品
+* 1 谢谢参与
+* 2 问答卡1
+* 3 问答卡2
+* 4 问答卡3
+* 5 吉祥物主场球衣
+* 6 吉祥物客场球衣
+* 7 礼包奖品
 
 response:
 ```javascript
@@ -73,7 +91,7 @@ or
 
 ### 记录用户抽奖信息
 
-post /api/record
+post /api/user/record
 
 body:
 ```javascript
@@ -93,7 +111,7 @@ response:
 
 ### 用户点击分享
 
-post /api/share
+post /api/user/share
 
 response:
 ```javascript
