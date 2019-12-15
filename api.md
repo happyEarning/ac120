@@ -41,7 +41,7 @@ response:
 
 ### 抽奖历史接口：
 
-get /api/user/histoty
+get /api/user/history
 
 ```javascript
 {
