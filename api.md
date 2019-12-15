@@ -41,7 +41,7 @@ response:
 
 ### 抽奖历史接口：
 
-get /api/user/history
+🚢 get /api/user/history
 
 ```javascript
 {
@@ -60,7 +60,7 @@ get /api/user/history
 
 ### 抽奖接口
 
-get /api/user/lottery
+🚢 get /api/user/lottery
 
 奖品编号：
 * 1 谢谢参与
