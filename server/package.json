@@ -1,0 +1,47 @@
+{
+  "name": "tuiwen-server",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node lib/startup.js",
+    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "bluebird": "^3.5.3",
+    "body-parser": "^1.17.2",
+    "connect": "^3.6.2",
+    "connect-mongo": "^1.3.2",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "crypto-js": "^3.1.9-1",
+    "dot-prop": "^4.2.0",
+    "express": "^4.15.3",
+    "express-restify-mongoose": "^4.1.3",
+    "express-session": "^1.15.4",
+    "fs-extra": "^5.0.0",
+    "lodash": "^4.17.10",
+    "memory-fs": "^0.4.1",
+    "method-override": "^2.3.9",
+    "moment": "^2.22.2",
+    "mongoose": "^5.3.1",
+    "multer": "^1.3.0",
+    "node-archiver": "^0.3.0",
+    "node-rsa": "^1.0.0",
+    "node-schedule": "^1.3.1",
+    "nodemailer": "^4.6.8",
+    "number-to-chinese-words": "^1.0.19",
+    "parseurl": "^1.3.2",
+    "ping": "^0.2.2",
+    "promise": "^8.0.2",
+    "redis": "^2.8.0",
+    "response-time": "^2.3.2",
+    "ua-parser-js": "^0.7.17",
+    "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.8",
+    "es6-promise": "^4.1.1",
+    "eslint-config-standard": "^12.0.0",
+    "extract-text-webpack-plugin": "^3.0.2"
+  }
+}

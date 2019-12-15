@@ -1,0 +1,9 @@
+{
+    "extends": "standard",
+    "rules": {
+        "handle-callback-err": "off",
+        "one-var": "off",
+        "no-unused-vars": "warn",
+        "node/no-deprecated-api": "warn"
+    }
+}
