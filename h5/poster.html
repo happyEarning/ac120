@@ -3,70 +3,39 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="viewport" content="width=device-width,  initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>AC米兰120周年活动</title>
+    <script src="js/flexible_css.js"></script>
+    <script src="js/flexible.js"></script>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/common.css">
-    <script src="js/zepto.min.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/game.js"></script>
 </head>
 
 <body>
     <div class="container">
         <div class="poster_bg">
-            <div class="poster_list">
-                <img src="img/card_thx.png" alt="">
+            <div class="poster_box">
+                <div class="poster_list">
+                    <div class="card_result_box"></div>
+                </div>
+                <div>与更多朋友分享<br />获取多一次抽卡机会
+                </div>
+                <div class="poster_code"></div>
             </div>
-            <div>
-                与更多朋友分享<br />
-                获取多一次抽卡机会
-            </div>
-            <div class="poster_code"></div>
         </div>
         <div class="poster_share_box">
-            <div class="share_wb" onclick="call('weibo')"></div>
-            <div class="share_wx" onclick="call('wechatFriend')"></div>
+            <div class="share_wb" onclick="shareByNavigator('weibo')" id="shareWb"></div>
+            <div class="share_wx" onclick="shareByNavigator('wechatFriend')" id="shareWx"></div>
         </div>
 
     </div>
-    <script type="text/javascript" src="js/NativeShare.js"></script>
-    <script>
-        var nativeShare = new NativeShare()
-        var shareData = {
-            title: 'AC米兰120周年活动',
-            desc: 'NativeShare是一个整合了各大移动端浏览器调用原生分享的插件',
-            // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
-            link: 'http://192.168.1.107:3000/poster.html',
-            icon: 'https://pic3.zhimg.com/v2-080267af84aa0e97c66d5f12e311c3d6_xl.jpg',
-            // 不要过于依赖以下两个回调，很多浏览器是不支持的
-            success: function () {
-                alert('success')
-            },
-            fail: function () {
-                alert('fail')
-            }
-        }
-        nativeShare.setShareData(shareData)
-
-        function call(command) {
-            try {
-                nativeShare.call(command)
-            } catch (err) {
-                // 如果不支持，你可以在这里做降级处理
-                // alert(err.message)
-
-
-            }
-        }
-
-        function setTitle(title) {
-            nativeShare.setShareData({
-                title: title,
-            })
-        }
-    </script>
+    <script src="js/zepto.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/NativeShare.js"></script>
+    <script src="js/poster.js"></script>
 </body>
 
 </html>

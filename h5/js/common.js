@@ -1,15 +1,4 @@
-// window.onload = function () {
-//     getRem(720, 100)
-// };
-// window.onresize = function () {
-//     getRem(720, 100)
-// };
-// function getRem(pwidth, prem) {
-//     var html = document.getElementsByTagName("html")[0];
-//     var oWidth = document.body.clientWidth || document.documentElement.clientWidth;
-//     html.style.fontSize = oWidth / pwidth * prem + "px";
-// }
-
+var WEBURL = '';
 /**
  * 设置cookie内容
  * @param name   [必须]cookie名称
@@ -17,7 +6,7 @@
  * @param expireDays [可选]默认1天 过期时间(天) 0.01大概25分钟 s
  */
 function setCookie(name, value, expireDays) {
-    expireDays = expireDays ? expireDays = 1: expireDays;
+    expireDays = expireDays ? expireDays = 1 : expireDays;
     var d = new Date();
     d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
     var expires = "expires=" + d.toUTCString();
@@ -62,14 +51,13 @@ function getQueryString(name) {
  * @param sync:       [可选] 同步(True/False)     {默认:false 异步}
  * @param headers:    [可选] 请求头部添加参数 默认带有token
  */
-function commonAjax(url, type, paramter, success,  error, sync, headers) {
+function commonAjax(url, type, paramter, success, error, sync, headers) {
     if (!url) {
         alert("URL出错");
         return;
     }
     var async = !sync;
     $.support.cors = true; //跨域
-    jQuery.support.cors = true;
 
     var defaultHeader = {
         "Content-Type": "application/json; charset=utf-8"
@@ -78,7 +66,7 @@ function commonAjax(url, type, paramter, success,  error, sync, headers) {
         defaultHeader = $.extend(defaultHeader, headers)
     }
     var xhr = $.ajax({
-        url: url,
+        url: WEBURL + url,
         async: async,
         cache: false,
         type: type,
@@ -93,7 +81,6 @@ function commonAjax(url, type, paramter, success,  error, sync, headers) {
             success(result);
         },
         error: error
-    }).fail(function (jqXHR, textStatus, errorThrown) {
-        alert("网络异常:无法连接到服务器!");
-    });
+    })
 }
+

@@ -3,28 +3,31 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="viewport" content="width=device-width,  initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>AC米兰120周年活动</title>
+    <script src="js/flexible_css.js"></script>
+    <script src="js/flexible.js"></script>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/common.css">
-    <script src="js/zepto.min.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/register.js"></script>
-
 </head>
 
 <body>
     <div class="container">
         <div class="register_banner">
             <div class="banner"></div>
-            <p class="register_tit">参与抽卡活动，收集120周年限量卡牌，更有队徽吉祥物实物大礼随机掉落！</p>
+            <p class="register_tit">参与抽卡活动，收集120周年限量卡牌，<br />更有队徽吉祥物实物大礼随机掉落！</p>
         </div>
         <div class="register_form">
-            <div><input type="text" placeholder="请填写您的姓名" class="register_form_item mb20"></div>
-            <div><input type="text" placeholder="请填写您的手机号" class="register_form_item mb10"></div>
-            <div class="ta_c mb25 cff f12">*请务必填写真实信息为了方便领取奖品</div>
-            <div class="register_checkbox mb25"><input type="checkbox" id="registerCheck"/><label>我已同意游戏状态</label>
+            <div><input type="text" placeholder="请填写您的姓名" class="register_form_item" id="registerName"
+                    maxlength="25"></div>
+            <div><input type="text" placeholder="请填写您的手机号" class="register_form_item" id="registerPhone"
+                    maxlength="25"></div>
+            <div class="register_tips">*请务必填写真实信息为了方便领取奖品</div>
+            <div class="register_checkbox"><input type="checkbox" id="registerCheck" /><label
+                    id="registerLink">我已同意游戏状态</label>
             </div>
             <div><button class="big_btn" id="playGame">进入游戏</button></div>
         </div>
@@ -55,6 +58,9 @@
             </div>
         </div>
     </div>
+    <script src="js/zepto.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/register.js"></script>
 </body>
 
 </html>

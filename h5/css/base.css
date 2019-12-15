@@ -3,10 +3,6 @@
 /* CSS Document */
 body {
     margin: 0;
-    color: #666666;
-    font: 14px/1.5 Arial, "Microsoft Yahei", sans-serif;
-    background: #FFF;
-    position: absolute;
     width: 100%;
     min-height: 100%;
     overflow-x: hidden;
@@ -75,33 +71,6 @@ img {
     vertical-align: middle;
 }
 
-
-
-.f12{
-    font-size: 12px;
-}
-.mb10 {
-    margin-bottom: 10px;
-}
-
-.mb15 {
-    margin-bottom: 15px;
-}
-
-.mb20 {
-    margin-bottom: 20px;
-}
-
-.mb25 {
-    margin-bottom: 25px;
-}
-
-.ta_c {
-    text-align: center;
-}
-.cff{
-    color: #fff;
-}
 
 @keyframes circle {
     0% {
