@@ -42,7 +42,7 @@ response:
 
 ### 抽奖接口
 
-get /api/lottery
+get /api/user/lottery
 
 奖品编号：
 1 谢谢参与
@@ -73,7 +73,7 @@ or
 
 ### 记录用户抽奖信息
 
-post /api/record
+post /api/user/record
 
 body:
 ```javascript
@@ -93,7 +93,7 @@ response:
 
 ### 用户点击分享
 
-post /api/share
+post /api/user/share
 
 response:
 ```javascript
