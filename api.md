@@ -91,7 +91,7 @@ or
 
 ### 记录用户抽奖信息
 
-post /api/user/record
+🚢 post /api/user/record
 
 body:
 ```javascript
@@ -111,7 +111,7 @@ response:
 
 ### 用户点击分享
 
-post /api/user/share
+🚢post /api/user/share
 
 response:
 ```javascript
