@@ -20,18 +20,31 @@ const rewardMap = {
   7: '礼包奖品',
 }
 
+const getUserTimes = async (user) => {
+  // 先判断日期 如果日期更新了 就设置成默认1
+  if (!moment(user.refreshDate).isSame(moment(), 'day')) {
+    await User.findByIdAndUpdate(user._id, {
+      refreshDate: new Date(),
+      times: 1,
+      todayTimes: 1
+    })
+    return 1
+  }
+  return user.times
+}
 // 用户登录
 module.exports.get = {
   method: 'get',
   middlewares: [
-    // (req, res, next) => {
-    //   User.populate(req.$injection.user, 'levelRef', next)
-    // },
-    // validateLogin,
     (req, res, next) => {
-      // todo 计算用户次数
+      const curUser = req.$injection.user
+      const times = await getUserTimes(curUser)
       res.$locals.writeData({
-        user: req.$injection.user || null
+        user: curUser ? {
+          "name": curUser.name,
+          "telephone": curUser.telephone,
+          times,
+        } : null
       })
       next()
     }
@@ -50,35 +63,42 @@ module.exports.register = {
       }
     },
     // 检查用户是否已经存在
-    (req, res, next) => {
+    async (req, res, next) => {
       let name = req.body.name
       let telephone = req.body.telephone
-      User.findOne({
-        telephone
-      }).exec((err, user) => {
-        if (user) {
-          // todo 计算用户次数
-          res.$locals.writeData({ user })
-          req.$session.setUser(user)
+      let findUser = User.findOne({ telephone })
+      if (findUser) {
+        // todo 计算用户次数
+        const times = await getUserTimes(findUser)
+        res.$locals.writeData({
+          user: {
+            name: user.name,
+            telephone: user.telephone,
+            times
+          }
+        })
+        req.$session.setUser(user)
+        next()
+      } else {
+        const newUser = new User()
+        newUser.name = name
+        newUser.telephone = telephone
+        newUser.times = 1
+        newUser.refreshDate = new Date()
+        newUser.todayTimes = 1
+        newUser.save(err => {
+          res.$locals.writeData({ user: {
+            name: newUser.name,
+            telephone: newUser.telephone,
+            times:1
+          } })
+          req.$session.setUser(newUser)
           next()
-        } else {
-          const newUser = new User()
-          newUser.name = name
-          newUser.telephone = telephone
-          newUser.times = 1
-          newUser.refreshDate = new Date
-          newUser.save(err => {
-            res.$locals.writeData({ user: newUser })
-            req.$session.setUser(newUser)
-            next()
-          })
-        }
-      })
+        })
+      }
     },
   ]
 }
-
-
 
 // 抽奖接口：
 module.exports.lottery = {
@@ -131,8 +151,14 @@ module.exports.lottery = {
       reward.type = randomIndex
       reward.userRef = user._id
       await reward.save()
-      // 减去次数
-      await User.findByIdAndUpdate(user._id, { times: user.times - 1 })
+      // 减去次数 && 是否已经抽过实物
+      const updateData = {
+        times: user.times - 1
+      }
+      if (updateData === 5 || updateData === 6 || updateData === 7) {
+        updateData.hasReward = true
+      }
+      await User.findByIdAndUpdate(user._id, updateData)
       res.$locals.writeData({
         result: randomIndex,
         recordId: reward._id
@@ -143,7 +169,6 @@ module.exports.lottery = {
 }
 
 // 抽奖历史接口：
-// get /api/user/history
 module.exports.history = {
   method: 'get',
   middlewares: [
@@ -152,14 +177,76 @@ module.exports.history = {
     async (req, res, next) => {
       let curUser = req.$injection.user
       let list = await Reward.find({ userRef: curUser._id, type: { $gt: 1 } })
-      res.$locals.writeData({ data: list.map(item=>({
-        name:rewardMap[item.type]
-      })) })
+      res.$locals.writeData({
+        data: list.map(item => ({
+          name: rewardMap[item.type]
+        }))
+      })
       next()
     },
   ]
 }
 
+// 记录实物卡接口：
+module.exports.record = {
+  method: 'post',
+  middlewares: [
+    validateLogin,
+    async (req, res, next) => {
+      if (!req.body.name || !req.body.recordId || !req.body.address) {
+        next(new Error('参数不正确'))
+      } else {
+        next()
+      }
+    },
+    async (req, res, next) => {
+      let curUser = req.$injection.user
+      const name = req.body.name
+      const recordId = req.body.recordId
+      const address = req.body.address
+
+      let findRecord = await Reward.findOne({ _id: recordId, userRef: curUser._id })
+      if (findRecord) {
+        await Reward.findByIdAndUpdate(findRecord._id, {
+          name,
+          telephone: curUser.telephone, //手机号
+          address
+        })
+        res.$locals.writeData({
+          message: '记录成功',
+        })
+        next()
+      } else {
+        next(new Error('中奖记录不存在'))
+      }
+    },
+  ]
+}
+
+// 分享接口：
+module.exports.share = {
+  method: 'post',
+  middlewares: [
+    validateLogin,
+    async (req, res, next) => {
+      let curUser = req.$injection.user
+      let todayTimes = curUser.todayTimes || 1
+      let times = curUser.times || 0
+      if (todayTimes <= 10) {
+        Reward.findByIdAndUpdate(curUser._id, {
+          times: times + 1,
+          todayTimes: todayTimes + 1
+        })
+        res.$locals.writeData({
+          message: '分享成功',
+        })
+        next()
+      } else {
+        next()
+      }
+    },
+  ]
+}
 
 // 初始化抽奖数据 正式上线后 要删除此代码
 module.exports.reset = {
