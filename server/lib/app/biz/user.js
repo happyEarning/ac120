@@ -36,7 +36,7 @@ const getUserTimes = async (user) => {
 module.exports.get = {
   method: 'get',
   middlewares: [
-    (req, res, next) => {
+    async (req, res, next) => {
       const curUser = req.$injection.user
       const times = await getUserTimes(curUser)
       res.$locals.writeData({
@@ -233,15 +233,18 @@ module.exports.share = {
       let todayTimes = curUser.todayTimes || 1
       let times = curUser.times || 0
       if (todayTimes <= 10) {
-        Reward.findByIdAndUpdate(curUser._id, {
+        await Reward.findByIdAndUpdate(curUser._id, {
           times: times + 1,
           todayTimes: todayTimes + 1
         })
         res.$locals.writeData({
-          message: '分享成功',
+          times:  times + 1,
         })
         next()
       } else {
+        res.$locals.writeData({
+          times
+        })
         next()
       }
     },
