@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>简单控制面板</title>
+  <script src="js/zepto.min.js"></script>
+  <style>
+    html{
+      background: #1c1c1c;
+      color:#fff;
+    }
+    .input{
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      margin-top: 50px;
+    }
+    input{
+      height: 25px;
+      width: 200px;
+      margin-left: 10px;
+      border:1px solid #eac100;
+      background: #eac100;
+    }
+    .btns{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 50px;;
+    }
+    button{
+      margin: 5px 15px;
+      background: #eac100;
+      border:none;
+      padding: 5px  10px;
+      font-size: 18px;;
+    }
+  </style>
+</head>
+<body>
+  <div class="input">
+    管理员key:<input autofocus id="key">
+  </div>
+  <div class="btns">
+    <button id="reset">重置奖品数据按钮</button>
+    <button id="exportUser">导出用户Excel</button>
+    <button id="exportRecord">导出中奖记录Excel</button>
+  </div>
+</body>
+
+<script>
+
+  $('#reset').click(function(){
+    const value = $('#key').val()
+    $.ajax({
+        url:'/api/user/reset',
+        contentType: "application/json; charset=utf-8",
+        data: {
+          key:value
+        },
+        dataType: "json",
+        success: function (result) {
+            success(result);
+        },
+      })
+  })
+  $('#exportUser').click(function(){
+    console.log(222)
+  })
+  $('#exportRecord').click(function(){
+    console.log(333)
+  })
+
+</script>
+</html>

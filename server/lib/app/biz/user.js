@@ -38,7 +38,11 @@ module.exports.get = {
   middlewares: [
     async (req, res, next) => {
       const curUser = req.$injection.user
-      const times = await getUserTimes(curUser)
+      let  times
+      if(curUser){
+        times = await getUserTimes(curUser)
+      }
+      
       res.$locals.writeData({
         user: curUser ? {
           "name": curUser.name,
