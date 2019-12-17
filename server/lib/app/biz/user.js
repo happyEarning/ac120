@@ -70,18 +70,18 @@ module.exports.register = {
     async (req, res, next) => {
       let name = req.body.name
       let telephone = req.body.telephone
-      let findUser = User.findOne({ telephone })
+      let findUser = await User.findOne({ telephone })
       if (findUser) {
         // todo 计算用户次数
         const times = await getUserTimes(findUser)
         res.$locals.writeData({
           user: {
-            name: user.name,
-            telephone: user.telephone,
+            name: findUser.name,
+            telephone: findUser.telephone,
             times
           }
         })
-        req.$session.setUser(user)
+        req.$session.setUser(findUser)
         next()
       } else {
         const newUser = new User()
@@ -237,7 +237,7 @@ module.exports.share = {
       let todayTimes = curUser.todayTimes || 1
       let times = curUser.times || 0
       if (todayTimes <= 10) {
-        await Reward.findByIdAndUpdate(curUser._id, {
+        await User.findByIdAndUpdate(curUser._id, {
           times: times + 1,
           todayTimes: todayTimes + 1
         })
