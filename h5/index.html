@@ -11,11 +11,11 @@
     <script src="js/flexible_css.js"></script>
     <script src="js/flexible.js"></script>
     <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/common.css?v=20191218">
 </head>
 
 <body>
-    <div class="container" style="display:none;">
+    <div class="container">
         <div class="game_content">
             <div class="game_banner">
                 <div class="game_tit"></div>
@@ -27,8 +27,9 @@
             </div>
         </div>
         <div class="game_footer" id="gameHistoryBox">
-            <dl id="gameHistory">
+            <dl>
                 <dt>历史中奖信息：</dt>
+                <div id="gameHistory"></div>
             </dl>
         </div>
         <div id="mask" style="display: none;">
@@ -41,7 +42,9 @@
                         <div class="card1_img"></div>
                     </div>
                     <div class="card2 card_item">
-                        <div class="card_result_box"></div>
+                        <div class="card_result_box">
+                            <img src="img/result1.png" alt="">
+                        </div>
                     </div>
                 </div>
                 <div id="ansBox" style="display: none;">
@@ -52,7 +55,7 @@
                         <div class="ans_btnbox">
                             <div>
                                 <button class="sm_btn" id="saveCard">保存卡片</button>
-                                <p class="ans_btn_tips" id="showSaveBtn" style="display:none;">长按保存到本地</p>
+                                <p class="ans_btn_tips" id="showSaveBtn" style="display:none;">长按图片保存到本地</p>
                             </div>
                             <div>
                                 <button class="mid_btn share_btn">分享活动海报</button>
@@ -94,7 +97,7 @@
     </div>
 
     <!-- 页面1 -->
-    <div class="bg2" id="bgBox1">
+    <div class="bg2" id="bgBox1" style="display: none;">
         <div class="slogon" id="bg1"></div>
         <div class="title" id="bg2" style="display: none;"></div>
     </div>
@@ -104,7 +107,7 @@
 
     <script src="js/zepto.min.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/index.js"></script>
+    <script src="js/index.js?v=2019121801"></script>
 </body>
 
 </html>

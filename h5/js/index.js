@@ -1,23 +1,24 @@
 var rewardResult;
 // 首屏获取数据
 function getData() {
-    // var acUserInfo = getCookie('acUserInfo');
-    // if (!acUserInfo) {
-        commonAjax('/api/user/get', 'GET', '', function (result) {
-            // debugger
-            if (result.success) {
-                if (result.user) {
-                    setCookie('acUserInfo', JSON.stringify(result.user));
-                    setCookie('lotteryTimes', result.user.times);
-                    var lotteryTimes = result.user.times ? result.user.times : 0;
-                    $('#lotteryTimes').text(lotteryTimes);
-                    getHistory();
-                } else {
-                    window.location.href = 'register.html';
+    commonAjax('/api/user/get', 'GET', '', function (result) {
+        // debugger
+        if (result.success) {
+            if (result.user) {
+                setCookie('acUserInfo', JSON.stringify(result.user));
+                setCookie('lotteryTimes', result.user.times);
+                var lotteryTimes = result.user.times ? result.user.times : 0;
+                $('#lotteryTimes').text(lotteryTimes);
+                getHistory();
+            } else {
+                if (document.referrer == '') {
+                    renAnimation();
                 }
+
             }
-        })
-    // }
+        }
+    })
+
 }
 //渲染抽奖图片
 function renderCardList() {
@@ -35,11 +36,12 @@ function getHistory() {
             var html = '';
             var reward = result.data;
             if (reward.length > 0) {
+                $('#gameHistory').html('');
                 $('#gameHistoryBox').show();
                 reward.forEach(function (item) {
                     html += '<dd>' + item.name + '</dd>';
                 })
-                $('#gameHistory').append(html);
+                $('#gameHistory').html(html);
             } else {
                 $('#gameHistoryBox').hide();
             }
@@ -63,11 +65,12 @@ function getLottery(result) {
         }
         $('.ans_content').hide().eq(2).show();
     }
-    setCookie('acResult', result)
+    setCookie('acResult', result);
+    var list = ['', '/result1.png', '/result2.png', '/result3.png', '/result4.png', '/result7.png', '/result7.png', '/result7.png']
     setTimeout(function () {
         $('#mask').show();
         $('.card_box').addClass('reback');
-        $('.card_result_box').addClass('card_result' + result);
+        $('.card_result_box').addClass('card_result' + list[result]);
         setTimeout(function () {
             $('.card1').addClass('add');
             $('.card2').addClass('add');
@@ -80,26 +83,30 @@ function getLottery(result) {
     }, 700);
 }
 
-$(document).ready(function () {
-    // 初始化
-    renderCardList();
-    // getData();
-    
+function renAnimation() {
+    $('#bgBox1').show();
     $('#bg1').addClass('ac');
-    setTimeout(function(){
+    setTimeout(function () {
         $('#bg1').hide();
         $('#bg2').show();
         $('#bg2').addClass('ac');
-        setTimeout(function(){
-            $('#bgBox1').hide();
-            $('.container').show();
-        }, 1200)
-    },1200)
-    
+        setTimeout(function () {
+            window.location.href = 'register.html';
+            // $('#bgBox1').hide();
+        }, 2000)
+    }, 2000)
+}
+
+$(document).ready(function () {
+    // 初始化
+    renderCardList();
+    getData();
+
+
     $(document).on('click', '#cardList li', function () {
         var _this = $(this);
         // _this.removeClass('ac').siblings().addClass('ac');
-        // getLottery(7);
+        // getLottery(3);
         commonAjax('/api/user/lottery', 'GET', '', function (result) {
             if (result.success) {
                 _this.removeClass('ac').siblings().addClass('ac');
@@ -112,7 +119,7 @@ $(document).ready(function () {
         })
         //分享按钮
         $('.share_btn').click(function () {
-            window.location.href = 'poster.html?res='+ rewardResult;
+            window.location.href = 'poster.html?res=' + rewardResult;
         });
 
         // 提交
@@ -137,14 +144,14 @@ $(document).ready(function () {
                     if (result.success) {
                         window.location.href = 'poster.html';
                     } else {
-                        alert(result.err);
+                        alert(result.err.message);
                     }
                     $('#submitBtn').attr('disabled', false);
                 })
             }
         });
 
-        $('#closeBtn').click(function(){
+        $('#closeBtn').click(function () {
             $('#mask').hide();
             $('#cardList li').removeClass('ac');
             $('#card_box').removeClass('reback');
@@ -154,7 +161,7 @@ $(document).ready(function () {
             getData();
         });
         // 保存图片
-        $('#saveCard').click(function(){
+        $('#saveCard').click(function () {
             $('#showSaveBtn').show();
         });
     })

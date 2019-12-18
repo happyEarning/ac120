@@ -15,7 +15,6 @@
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 100vh;
     height: 100%;
     max-width: 500px;
     margin: 0 auto;
@@ -27,6 +26,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 999;
 }
 .slogon{
     width: 7.2rem;
@@ -36,8 +36,8 @@
     filter: blur(6px);
 }
 .slogon.ac{
-    filter: blur(0px);
-    transition: all 1s ease;
+    filter: blur(0);
+    transition: all 2s ease;
 }
 .title{
     width: 6.16rem;
@@ -48,7 +48,7 @@
 }
 .title.ac{
     filter: blur(0);
-    transition: all 1s ease;
+    transition: all 2s ease;
 }
 
 .sm_btn {
@@ -220,8 +220,8 @@ input[type=checkbox]{
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    height: 72vh;
-    width: 71vw;
+    height: 69.2%;
+    width: 71%;
     margin: 3% auto 0;
     padding: 5% 5% 0;
     background: #0D0D0D;
@@ -383,15 +383,15 @@ input[type=checkbox]{
 }
 
 #mask {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    background: url(../img/bg.png) no-repeat;
+    background: url(../img/bg.jpg) no-repeat;
     background-size: 100% 100%;
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
     z-index: 99;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .card_box {
@@ -444,7 +444,9 @@ input[type=checkbox]{
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
-
+.card_result_box img{
+    width: 100%;
+}
 .card_result1 {
     background-image: url(../img/result1.png);
 }
@@ -561,7 +563,7 @@ input[type=checkbox]{
 
 .ans_form_textarea {
     width: 100%;
-    padding: 0 4%;
+    padding: 2% 4%;
     box-sizing: border-box;
     height: 2.13rem;
     background: #575757;
@@ -645,4 +647,8 @@ input[type=checkbox]{
 
 .share_wx {
     background-image: url(../img/btn_share_wechat.png);
+}
+#ansBox{
+    position: relative;
+    z-index: 1000;
 }
