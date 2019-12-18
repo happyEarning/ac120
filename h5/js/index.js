@@ -1,23 +1,29 @@
 var rewardResult;
 // 首屏获取数据
 function getData() {
-    commonAjax('/api/user/get', 'GET', '', function (result) {
-        // debugger
-        if (result.success) {
-            if (result.user) {
-                setCookie('acUserInfo', JSON.stringify(result.user));
-                setCookie('lotteryTimes', result.user.times);
-                var lotteryTimes = result.user.times ? result.user.times : 0;
-                $('#lotteryTimes').text(lotteryTimes);
-                getHistory();
-            } else {
-                if (document.referrer == '') {
-                    renAnimation();
+    // debugger
+    if (document.referrer.indexOf('register.html') === -1) {
+        renAnimation();
+    } else {
+        $('#indPage').show();
+    }
+    setTimeout(function () {
+        commonAjax('/api/user/get', 'GET', '', function (result) {
+            // debugger
+            if (result.success) {
+                if (result.user) {
+                    setCookie('acUserInfo', JSON.stringify(result.user));
+                    setCookie('lotteryTimes', result.user.times);
+                    var lotteryTimes = result.user.times ? result.user.times : 0;
+                    $('#lotteryTimes').text(lotteryTimes);
+                    getHistory();
+                } else {
+                    window.location.href = 'register.html';
                 }
-
             }
-        }
-    })
+        })
+    }, 0)
+    
 
 }
 //渲染抽奖图片
@@ -84,16 +90,21 @@ function getLottery(result) {
 }
 
 function renAnimation() {
-    $('#bgBox1').show();
+    $('#bgBox1').addClass('fadeIn');
     $('#bg1').addClass('ac');
     setTimeout(function () {
-        $('#bg1').hide();
-        $('#bg2').show();
-        $('#bg2').addClass('ac');
+        $('#bgBox1').addClass('fadeOut').removeClass('fadeIn');
         setTimeout(function () {
-            window.location.href = 'register.html';
-            // $('#bgBox1').hide();
-        }, 2000)
+            $('#bgBox2').addClass('fadeIn');
+            $('#bg2').addClass('ac');
+            setTimeout(function () {
+                $('#bgBox2').addClass('fadeOut').removeClass('fadeIn');
+                setTimeout(function () {
+                    $('.bg2').hide();
+                    $('#indPage').show();
+                }, 1000)
+            }, 2000)
+        }, 1000);
     }, 2000)
 }
 

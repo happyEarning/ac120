@@ -27,6 +27,23 @@
     align-items: center;
     justify-content: center;
     z-index: 999;
+    opacity: 0;
+}
+.fadeIn{
+    -o-animation: fadeIn 2s ease;
+    -ms-animation: fadeIn 2s ease;
+    -moz-animation: fadeIn 2s ease;
+    -webkit-animation: fadeIn 2s ease;
+    animation: fadeIn 2s ease;
+    opacity: 1;
+}
+.fadeOut{
+    -o-animation: fadeOut 1s ease;
+    -ms-animation: fadeOut 1s ease;
+    -moz-animation: fadeOut 1s ease;
+    -webkit-animation: fadeOut 1s ease;
+    animation: fadeOut 1s ease;
+    /* opacity: 0; */
 }
 .slogon{
     width: 7.2rem;
@@ -327,7 +344,7 @@ input[type=checkbox]{
 
 .game_container {
     width: 6.75rem;
-    margin: 0 auto;
+    margin: 0 auto 1rem;
 }
 
 .card_list {

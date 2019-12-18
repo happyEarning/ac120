@@ -54,11 +54,13 @@ img {
     border: 0;
     vertical-align: bottom;
 }
-button{
+
+button {
     border: 0;
     outline: none;
     cursor: pointer;
 }
+
 input {
     outline: none;
     vertical-align: middle;
@@ -101,4 +103,30 @@ img {
     }
 }
 
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
 
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

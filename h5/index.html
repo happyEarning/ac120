@@ -16,78 +16,87 @@
 
 <body>
     <div class="container">
-        <div class="game_content">
-            <div class="game_banner">
-                <div class="game_tit"></div>
-                <p>点击卡牌试手气，获得AC米兰120周年特别好礼！</p>
-                <p>您还有<b id="lotteryTimes"></b>次抽奖机会</p>
-            </div>
-            <div class="game_container">
-                <ul class="card_list" id="cardList"></ul>
-            </div>
+        <!-- 页面1 -->
+        <div class="bg2" id="bgBox1">
+            <div class="slogon" id="bg1"></div>
         </div>
-        <div class="game_footer" id="gameHistoryBox">
-            <dl>
-                <dt>历史中奖信息：</dt>
-                <div id="gameHistory"></div>
-            </dl>
+        <div class="bg2" id="bgBox2">
+            <div class="title" id="bg2"></div>
         </div>
-        <div id="mask" style="display: none;">
-            <div class="card_bar">
-                <div class="light"></div>
-                <div class="light_bright" style="display: none;"></div>
-                <div class="card_box">
-                    <div class="close_btn" style="display: none;" id="closeBtn"></div>
-                    <div class="card1 card_item">
-                        <div class="card1_img"></div>
-                    </div>
-                    <div class="card2 card_item">
-                        <div class="card_result_box">
-                            <img src="img/result1.png" alt="">
-                        </div>
-                    </div>
+        <div id="indPage" style="display: none;">
+            <div class="game_content">
+                <div class="game_banner">
+                    <div class="game_tit"></div>
+                    <p>点击卡牌试手气，获得AC米兰120周年特别好礼！</p>
+                    <p>您还有<b id="lotteryTimes"></b>次抽奖机会</p>
                 </div>
-                <div id="ansBox" style="display: none;">
-                    <!-- 未中奖 -->
-                    <div class="ans_content">
-                        <p class="ans_tit">AC米兰120周年线上尊享纪念卡牌</p>
-                        <p class="ans_tit">与您共享120周年的激情</p>
-                        <div class="ans_btnbox">
-                            <div>
-                                <button class="sm_btn" id="saveCard">保存卡片</button>
-                                <p class="ans_btn_tips" id="showSaveBtn" style="display:none;">长按图片保存到本地</p>
-                            </div>
-                            <div>
-                                <button class="mid_btn share_btn">分享活动海报</button>
-                                <p class="ans_btn_tips">可获得更多抽奖机会</p>
+                <div class="game_container">
+                    <ul class="card_list" id="cardList"></ul>
+                </div>
+            </div>
+            <div class="game_footer" id="gameHistoryBox">
+                <dl>
+                    <dt>历史中奖信息：</dt>
+                    <div id="gameHistory"></div>
+                </dl>
+            </div>
+            <div id="mask" style="display: none;">
+                <div class="card_bar">
+                    <div class="light"></div>
+                    <div class="light_bright" style="display: none;"></div>
+                    <div class="card_box">
+                        <div class="close_btn" style="display: none;" id="closeBtn"></div>
+                        <div class="card1 card_item">
+                            <div class="card1_img"></div>
+                        </div>
+                        <div class="card2 card_item">
+                            <div class="card_result_box">
+                                <img src="img/result1.png" alt="">
                             </div>
                         </div>
                     </div>
-                    <!-- 问答卡 -->
-                    <div class="ans_content" style="display: none;">
-                        <p class="ans_tips">恭喜您获得：</p>
-                        <p class="ans_tit">AC米兰120周年</p>
-                        <p class="ans_tit">荣耀时刻线上限量纪念卡牌一张</p>
-                        <div class="ans_btnbox">
-                            <button class="sm_btn">保存卡片</button>
-                            <div>
-                                <button class="mid_btn share_btn">分享活动海报</button>
-                                <p class="ans_btn_tips">可获得更多抽奖机会</p>
+                    <div id="ansBox" style="display: none;">
+                        <!-- 未中奖 -->
+                        <div class="ans_content">
+                            <p class="ans_tit">AC米兰120周年线上尊享纪念卡牌</p>
+                            <p class="ans_tit">与您共享120周年的激情</p>
+                            <div class="ans_btnbox">
+                                <div>
+                                    <button class="sm_btn" id="saveCard">保存卡片</button>
+                                    <p class="ans_btn_tips" id="showSaveBtn" style="display:none;">长按图片保存到本地</p>
+                                </div>
+                                <div>
+                                    <button class="mid_btn share_btn">分享活动海报</button>
+                                    <p class="ans_btn_tips">可获得更多抽奖机会</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- 礼品卡 -->
-                    <div class="ans_content" style="display: none;">
-                        <input type="hidden" id="recordId">
-                        <p class="ans_tips">恭喜您获得：</p>
-                        <p class="ans_tit">AC米兰120周年</p>
-                        <p class="ans_tit">官方限量小恶魔吉祥物一份</p>
-                        <div class="ans_form">
-                            <div><input type="text" placeholder="请填写您的姓名" class="ans_form_item" id="acUserName"></div>
-                            <div><input type="text" class="ans_form_item" readonly value="" id="acUserPhone"></div>
-                            <div><textarea class="ans_form_textarea" placeholder="请输入收货地址"
-                                    id="acUserAddress"></textarea></div>
-                            <div><button class="big_btn" id="submitBtn">确认提交</button></div>
+                        <!-- 问答卡 -->
+                        <div class="ans_content" style="display: none;">
+                            <p class="ans_tips">恭喜您获得：</p>
+                            <p class="ans_tit">AC米兰120周年</p>
+                            <p class="ans_tit">荣耀时刻线上限量纪念卡牌一张</p>
+                            <div class="ans_btnbox">
+                                <button class="sm_btn">保存卡片</button>
+                                <div>
+                                    <button class="mid_btn share_btn">分享活动海报</button>
+                                    <p class="ans_btn_tips">可获得更多抽奖机会</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 礼品卡 -->
+                        <div class="ans_content" style="display: none;">
+                            <input type="hidden" id="recordId">
+                            <p class="ans_tips">恭喜您获得：</p>
+                            <p class="ans_tit">AC米兰120周年</p>
+                            <p class="ans_tit">官方限量小恶魔吉祥物一份</p>
+                            <div class="ans_form">
+                                <div><input type="text" placeholder="请填写您的姓名" class="ans_form_item" id="acUserName"></div>
+                                <div><input type="text" class="ans_form_item" readonly value="" id="acUserPhone"></div>
+                                <div><textarea class="ans_form_textarea" placeholder="请输入收货地址"
+                                        id="acUserAddress"></textarea></div>
+                                <div><button class="big_btn" id="submitBtn">确认提交</button></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -96,14 +105,6 @@
         <input type="hidden" id="acResult">
     </div>
 
-    <!-- 页面1 -->
-    <div class="bg2" id="bgBox1" style="display: none;">
-        <div class="slogon" id="bg1"></div>
-        <div class="title" id="bg2" style="display: none;"></div>
-    </div>
-    <!-- <div class="bg2" id="bgBox2" style="display: none;">
-        <div class="title" id="bg2"></div>
-    </div> -->
 
     <script src="js/zepto.min.js"></script>
     <script src="js/common.js"></script>

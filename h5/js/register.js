@@ -40,11 +40,11 @@ $(document).ready(function() {
             // }
             $('#playGame').attr('disabled', true);
             commonAjax('/api/user/register', 'POST', params, function(result) {
+                $('#playGame').attr('disabled', false);
                 if (result.success) {
                     setCookie('lotteryTimes', result.times);
                     window.location.href = 'index.html';
                 }
-                $('#playGame').attr('disabled', false);
             })
             
         }
