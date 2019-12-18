@@ -186,7 +186,7 @@ module.exports.history = {
       let list = await Reward.find({ userRef: curUser._id, type: { $gt: 1 } })
       res.$locals.writeData({
         data: list.map(item => ({
-          name: rewardMap[item.type]
+          name: item.type<5? '荣耀时刻线上限量纪念卡':'官方限量小恶魔吉祥物'
         }))
       })
       next()
