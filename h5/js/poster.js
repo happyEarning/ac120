@@ -1,12 +1,12 @@
 var nativeShare = new NativeShare()
 var acResult = getCookie('rewardResult') || 1;
-var list = ['', '/poster_result1.png','/poster_result2.png','/poster_result3.png','/poster_result4.png','/poster_result7.png','/poster_result7.png','/poster_result7.png']
+var list = ['', '/poster_result1.png', '/poster_result2.png', '/poster_result3.png', '/poster_result4.png', '/poster_result7.png', '/poster_result7.png', '/poster_result7.png']
 var shareData = {
     title: 'AC米兰120周年活动',
     desc: 'AC米兰120周年活动',
     // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
     link: 'https://project.sdsinfotech.com/ACM120/index.html',
-    icon: 'https://project.sdsinfotech.com/ACM120/img'+list[acResult],
+    icon: 'https://project.sdsinfotech.com/ACM120/img' + list[acResult],
     // 不要过于依赖以下两个回调，很多浏览器是不支持的
     success: function () {
         alert('success')
@@ -16,8 +16,6 @@ var shareData = {
     }
 }
 nativeShare.setShareData(shareData)
-
-
 
 // 判断浏览器版本
 var browser = {
@@ -49,38 +47,33 @@ function getShareNum() {
 }
 
 function shareByNavigator(command) {
+    getShareNum();
     var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
     if (ua.match(/MicroMessenger/i) == "micromessenger") {//在微信中打开
-        $('#shareWb').hide();
-        if (!document.referrer) {
-            window.location.href = 'index.html'
-        }
+        alert('请点击右上角分享给好友或分享到朋友圈')
         return;
-    } else if (ua.match(/version\/([\d.]+).*safari/) && command != 'weibo') {//在safari浏览器打开s
-        if (navigator.share) {
-            navigator.share({
-                title: 'AC米兰120周年活动',
-                url: 'https://project.sdsinfotech.com/ACM120/index.html'
-            }).then(() => {
-                console.log('Thanks for sharing!');
-            })
-                .catch(console.error);
-        } else {
+    } else if (navigator.share && command != 'weibo') {//在safari浏览器打开s
+        navigator.share({
+            title: 'AC米兰120周年活动',
+            url: 'https://project.sdsinfotech.com/ACM120/index.html'
+        }).then(() => {
+            console.log('Thanks for sharing!');
+        })
+            .catch(console.error);
 
-        }
-        return;
     } else {
-        try {
-            nativeShare.call(command);
-            
-        } catch (err) {
-            // 如果不支持，你可以在这里做降级处理
-            // alert(err.message)
-        }
+        nativeShareSvc(command)
     }
-    getShareNum();
 }
 
+function nativeShareSvc(command) {
+    try {
+        nativeShare.call(command);
+    } catch (err) {
+        // 如果不支持，你可以在这里做降级处理
+        alert('推荐使用微信，百度，UC，QQ，Safari等浏览器进行分享')
+    }
+}
 
 $(document).ready(function () {
     //判断浏览器
@@ -92,8 +85,10 @@ $(document).ready(function () {
         }
     }
     // shareByNavigator();
-   if (acResult == 1) {
-        $('#posterResult').attr('src', 'https://project.sdsinfotech.com/ACM120/img'+list[acResult]);
-    }
+
+
+    $('.close_btn').click(function () {
+        location.href = 'index.html'
+    })
 });
 

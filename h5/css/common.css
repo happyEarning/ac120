@@ -669,3 +669,11 @@ input[type=checkbox]{
     position: relative;
     z-index: 1000;
 }
+
+.poster-view .close_btn{
+    position: absolute;
+    z-index: 99;
+    right: 1.1rem;
+    top: 0.4rem;
+    z-index: 999;
+}

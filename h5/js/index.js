@@ -110,7 +110,7 @@ function closeAnimation(){
 $(document).ready(function () {
     // 初始化
     renderCardList();
-    if (document.referrer.indexOf('register.html') === -1) {
+    if (document.referrer.indexOf('register.html') === -1 && document.referrer.indexOf('poster.html') === -1) {
         renAnimation();
     } else {
         getData();
