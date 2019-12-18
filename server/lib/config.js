@@ -37,6 +37,9 @@ module.exports = (function (prod) {
       cookieSecret: 'cookieSecret',
       sessionSecret: 'sessionSecret'
     },
+    download: {
+      tmpDir: _mkdir(path.join(__dirname, '../tmp/')),
+    },
   }
 
 

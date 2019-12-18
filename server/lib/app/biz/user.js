@@ -1,7 +1,10 @@
 const _ = require('lodash')
 const fs = require('fs')
+const path = require('path')
 const moment = require('moment')
+const XLSX  = require('xlsx')
 const redis = require('../../runtime/redis')
+const config = require('../../config')
 const User = require('../../models/user'),
   Reward = require('../../models/reward'),
   validateLogin = require('../validators/validateLogin')
@@ -255,10 +258,78 @@ module.exports.share = {
   ]
 }
 
+// 到处用户列表
+module.exports.exportUser = {
+  method: 'get',
+  middlewares: [
+    (req, res, next) => {
+      if (req.query.key!=='ac120AdminKey') {
+        next(new Error('没有权限'))
+      } else {
+        next()
+      }
+    },
+    async (req, res, next) => {
+      let book = XLSX.utils.book_new()
+      let data = [['姓名','手机号','注册时间']]
+      const userList = await User.find()
+      const rows = userList.map(user=>([user.name,user.telephone,moment(user.createdAt).format('YYYY-MM-DD HH:mm:ss')]))
+      var sheet = XLSX.utils.aoa_to_sheet(data.concat(rows))
+      XLSX.utils.book_append_sheet(book, sheet, 'Sheet1')
+    
+      let fileName = path.join(config.download.tmpDir, `用户列表_${moment().format('YYYYMMDDHHmmss')}.xlsx`)
+      XLSX.writeFile(book, fileName)
+      res.download(fileName, (err) => {
+        // fs.remove(fileName)
+      })
+    },
+  ]
+}
+
+// 到处中奖列表
+module.exports.exportRecord = {
+  method: 'get',
+  middlewares: [
+    (req, res, next) => {
+      if (req.query.key!=='ac120AdminKey') {
+        next(new Error('没有权限'))
+      } else {
+        next()
+      }
+    },
+    async (req, res, next) => {
+      let book = XLSX.utils.book_new()
+      let data = [['姓名','手机号','收货地址','奖品','中奖时间']]
+      let list = await Reward.find({ type: { $gt: 4 } }).populate('userRef')
+      const rows = list.map(item=>([
+        item.name || item.userRef.name,
+        item.telephone || item.userRef.telephone,
+        item.address,
+        rewardMap[item.type],
+        moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss')]))
+      var sheet = XLSX.utils.aoa_to_sheet(data.concat(rows))
+      XLSX.utils.book_append_sheet(book, sheet, 'Sheet1')
+    
+      let fileName = path.join(config.download.tmpDir, `中奖列表_${moment().format('YYYYMMDDHHmmss')}.xlsx`)
+      XLSX.writeFile(book, fileName)
+      res.download(fileName, (err) => {
+        // fs.remove(fileName)
+      })
+    },
+  ]
+}
+
 // 初始化抽奖数据 正式上线后 要删除此代码
 module.exports.reset = {
   method: 'get',
   middlewares: [
+    (req, res, next) => {
+      if (req.query.key!=='ac120AdminKey') {
+        next(new Error('没有权限'))
+      } else {
+        next()
+      }
+    },
     async (req, res, next) => {
       let client = redis.client
       let rewards = [

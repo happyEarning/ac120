@@ -37,31 +37,31 @@ const _vendorMiddlewares = app => {
   // Log response time
   app.use(responseTime())
   // Cross domain
-  if (!config.prod) {
-    app.use(cors({
-      origin: true,
-      credentials: true
-    }))
-  } else {
-    const whitelist = [
-      'http://admin.charmdeer.com',
-      'http://m-admin.charmdeer.com',
-      'http://v-admin.charmdeer.com',
-      'http://m-app.charmdeer.com'
-    ]
-    app.use(cors({
-      origin: (origin, next) => {
-        let allow = !origin || whitelist.indexOf(origin) !== -1
-        if (allow) {
-          next(null, true)
-        } else {
-          next(null, true)
-          // next(new Error('Not allowed by CORS'))
-        }
-      },
-      credentials: true
-    }))
-  }
+  // if (!config.prod) {
+  //   app.use(cors({
+  //     origin: true,
+  //     credentials: true
+  //   }))
+  // } else {
+  //   const whitelist = [
+  //     'http://admin.charmdeer.com',
+  //     'http://m-admin.charmdeer.com',
+  //     'http://v-admin.charmdeer.com',
+  //     'http://m-app.charmdeer.com'
+  //   ]
+  //   app.use(cors({
+  //     origin: (origin, next) => {
+  //       let allow = !origin || whitelist.indexOf(origin) !== -1
+  //       if (allow) {
+  //         next(null, true)
+  //       } else {
+  //         next(null, true)
+  //         // next(new Error('Not allowed by CORS'))
+  //       }
+  //     },
+  //     credentials: true
+  //   }))
+  // }
 
   // Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.
   app.use(methodOverride())
@@ -141,9 +141,9 @@ const _errHandler = (app) => {
     const json = { message: err.message }
     if (err instanceof Error) {
       json.message = err.message
-      if (!config.prod) {
-        json.stacks = err.stack.split('\n')
-      }
+      // if (!config.prod) {
+      //   json.stacks = err.stack.split('\n')
+      // }
     } else {
       json.message = err
     }
