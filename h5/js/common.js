@@ -65,14 +65,17 @@ function commonAjax(url, type, paramter, success, error, sync, headers) {
     if (headers) {
         defaultHeader = $.extend(defaultHeader, headers)
     }
+    if (paramter) {
+        paramter = JSON.stringify(paramter)
+    }
     var xhr = $.ajax({
-        url: WEBURL + url,
+        url: url,
         async: async,
         cache: false,
         type: type,
         headers: defaultHeader,
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(paramter),
+        data: paramter,
         dataType: "json",
         crossDomain: true,
         beforeSend: function (xhr) { },

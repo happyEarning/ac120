@@ -42,7 +42,7 @@ $(document).ready(function() {
             commonAjax('/api/user/register', 'POST', params, function(result) {
                 if (result.success) {
                     setCookie('lotteryTimes', result.times);
-                    window.location.href = 'game.html';
+                    window.location.href = 'index.html';
                 }
                 $('#playGame').attr('disabled', false);
             })

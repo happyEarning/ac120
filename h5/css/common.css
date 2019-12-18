@@ -5,10 +5,50 @@
     max-width: 500px;
     margin: 0 auto;
     box-sizing: border-box;
-    background: url(../img/bg.png) no-repeat;
+    background: url(../img/bg.jpg) no-repeat;
     background-size: 100% 100%;
     color: #fff;
     overflow-x: hidden;
+}
+.bg2{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    background: url(../img/bg2.jpg) no-repeat;
+    background-size: 100% 100%;
+    color: #fff;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.slogon{
+    width: 7.2rem;
+    height: 3.36rem;
+    background: url(../img/slogan.png) no-repeat;
+    background-size: 100% 100%;
+    filter: blur(6px);
+}
+.slogon.ac{
+    filter: blur(0px);
+    transition: all 1s ease;
+}
+.title{
+    width: 6.16rem;
+    height: 4.32rem;
+    background: url(../img/title.png) no-repeat;
+    background-size: 100% 100%;
+    filter: blur(6px);
+}
+.title.ac{
+    filter: blur(0);
+    transition: all 1s ease;
 }
 
 .sm_btn {
@@ -49,6 +89,7 @@
 }
 
 /* 注册 */
+
 .banner {
     width: 5.87rem;
     height: 4.56rem;
@@ -86,7 +127,8 @@
     font-size: 16px;
     margin-bottom: .24rem;
 }
-.register_form_item.mb21{
+
+.register_form_item.mb21 {
     margin-bottom: .56rem;
 }
 
@@ -101,18 +143,54 @@
 .register_form_item:-ms-input-placeholder {
     color: #F2F2F2;
 }
-.register_tips{
+
+.register_tips {
     font-size: 12px;
     margin-bottom: .67rem;
     text-align: center;
 }
+
 .register_checkbox {
+    position: relative;
     text-align: center;
     margin-bottom: .67rem;
 }
+.register_check +label{
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 13px;
+    height: 13px;
+    margin-right: 3px;
+    cursor: pointer;
+    background: #fff;
+    border:1px #EAC000 solid;
+    border-radius: 2px;
+    vertical-align: middle;
+}
 
-.register_checkbox input {
-    /* -webkit-appearance: none; */
+.register_check:checked +label::before{
+    display: block;
+    content: "\2714";
+    text-align: center;
+    font-size: 12px;
+    color: #EAC000!important;
+    /* margin-top:-5px; */
+}
+input[type=checkbox]{
+	visibility: hidden;
+}
+.register_checkbar{
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+    height: 15px;
+    line-height: 15px;
+}
+/* .register_checkbox input {
+    -webkit-appearance: none;
     display: inline-block;
     width: 15px;
     height: 15px;
@@ -122,15 +200,18 @@
     background: #fff;
 }
 
-.register_checkbox label {
+.register_check:checked {
+    border-color:#34b93d;
+    color:#f0f;
+    content: '\EA06';
+} */
+
+.register_checkbox a {
     vertical-align: middle;
     text-decoration: underline;
     color: #EAC000;
 }
 
-.register_checkbox a {
-    color: #EAC000;
-}
 
 /* 协议 */
 
@@ -185,24 +266,41 @@
 
 /* 活动页面 */
 
+.light_box{
+    /* width: 90%; */
+    /* height: 7.47rem; */
+    /* position: absolute; */
+    /* top: 1.29rem; */
+    /* overflow: hidden; */
+}
+.light_box .light{
+    transform: scale(.8);
+    top: -1.49rem;
+}
+.light_box .light_bright{
+    transform: scale(.8);
+}
 .light {
     position: absolute;
-    left: 0;
+    left: -2.25rem;
     top: 0;
-    width: 100%;
-    height: 547px;
+    width: 14.51rem;
+    height: 14.59rem;
     background: url(../img/light.png) no-repeat;
     background-size: 100% 100%;
+    /* animation: circle 10s linear infinite; */
+}
+.light.ac{
     animation: circle 10s linear infinite;
 }
 
 .light_bright {
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 203px;
-    /* z-index: 2; */
+    left: -0.71rem;
+    top: .8rem;
+    width: 11.41rem;
+    height: 5.41rem;
+    /* z-index: 100; */
     background: url(../img/fireworks.png) no-repeat;
     background-size: 100% 100%;
 }
@@ -218,6 +316,7 @@
     margin: .69rem auto .38rem;
     background: url(../img/logo_120.png) no-repeat;
     background-size: 100% 100%;
+    /* box-sizing: border-box; */
 }
 
 .game_banner b {
@@ -256,9 +355,11 @@
 .pd15 {
     padding-bottom: 15vh;
 }
-.game_content{
-    padding-bottom: 3.39rem;
+
+.game_content {
+    padding-bottom: 3.09rem;
 }
+
 .game_footer {
     position: absolute;
     bottom: 0;
@@ -282,13 +383,15 @@
 }
 
 #mask {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     background: url(../img/bg.png) no-repeat;
     background-size: 100% 100%;
     width: 100%;
     min-height: 100vh;
+    z-index: 99;
+    overflow: hidden;
 }
 
 .card_box {
@@ -341,25 +444,32 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
-.card_result1{
+
+.card_result1 {
     background-image: url(../img/result1.png);
 }
-.card_result2{
+
+.card_result2 {
     background-image: url(../img/result2.png);
 }
-.card_result3{
+
+.card_result3 {
     background-image: url(../img/result3.png);
 }
-.card_result4{
+
+.card_result4 {
     background-image: url(../img/result4.png);
 }
-.card_result5{
-    background-image: url(../img/result5.png);
+
+.card_result5 {
+    background-image: url(../img/result7.png);
 }
-.card_result6{
-    background-image: url(../img/result6.png);
+
+.card_result6 {
+    background-image: url(../img/result7.png);
 }
-.card_result7{
+
+.card_result7 {
     background-image: url(../img/result7.png);
 }
 
@@ -464,15 +574,19 @@
 }
 
 .poster_bg {
-    /* background: url(../img/poster_bg.png) no-repeat; */
+    position: relative;
+    z-index: 100;
     background-size: 100% 100%;
     width: 100%;
-    height: 12.32rem;
+    /* height: 32.375rem; */
     font-size: 14px;
     color: #EAC000;
     text-align: center;
 }
-.poster_box{
+.poster_bg img{
+    width: 100%;
+}
+.poster_box {
     /* position: absolute; */
     /* top: 1.49rem; */
     /* left: 50%; */
@@ -480,10 +594,11 @@
     width: 6.4rem;
     margin: 1.49rem auto 0;
     height: 12.32rem;
-    box-shadow: 0 12px 7px 0 rgba(0,0,0,0.50);
+    box-shadow: 0 12px 7px 0 rgba(0, 0, 0, 0.50);
     border: 3px #EAC000 solid;
     border-radius: 20px;
 }
+
 .poster_bg .poster_code {
     width: 1.44rem;
     height: 1.44rem;
@@ -505,17 +620,23 @@
 
 .poster_share_box {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    width: 65%;
+    /* width: 65%; */
+    padding: 0 2rem;
     margin: .93rem auto 0;
 }
-
+.poster_share_bar{
+    display: flex;
+    width: 100%;
+    /* justify-content: space-between; */
+}
 .poster_share_box .share_wb, .poster_share_box .share_wx {
     width: 2.13rem;
     height: 1.79rem;
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    margin: 0 auto;
 }
 
 .share_wb {

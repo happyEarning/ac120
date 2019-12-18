@@ -3,7 +3,7 @@ var shareData = {
     title: 'AC米兰120周年活动',
     desc: 'AC米兰120周年活动',
     // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
-    link: 'http://192.168.1.107:3000/poster.html',
+    link: 'https://project.sdsinfotech.com/ACM120/index.html',
     icon: 'https://pic3.zhimg.com/v2-080267af84aa0e97c66d5f12e311c3d6_xl.jpg',
     // 不要过于依赖以下两个回调，很多浏览器是不支持的
     success: function () {
@@ -38,23 +38,29 @@ var browser = {
 }
 
 function shareByNavigator(command) {
+    commonAjax('/api/user/share', 'POST', '', function (result) {
+        if (result.success) {
+        } else {
+            alert(result.err);
+        }
+    })
     var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
     // debugger
     if (ua.match(/MicroMessenger/i) == "micromessenger") {//在微信中打开
         $('#shareWb').hide();
         return;
     } else if (ua.match(/version\/([\d.]+).*safari/)) {//在safari浏览器打开s
-        if (navigator.share) { 
-            navigator.share({ 
-              title: 'WebShare API Demo', 
-              url: 'https://codepen.io/ayoisaiah/pen/YbNazJ' 
-            }).then(() => { 
-              console.log('Thanks for sharing!'); 
-            }) 
-            .catch(console.error); 
-          } else { 
-            
-          }
+        if (navigator.share) {
+            navigator.share({
+                title: 'AC米兰120周年活动',
+                url: 'https://project.sdsinfotech.com/ACM120/index.html'
+            }).then(() => {
+                console.log('Thanks for sharing!');
+            })
+                .catch(console.error);
+        } else {
+
+        }
         return;
     } else {
         try {
@@ -70,9 +76,10 @@ function shareByNavigator(command) {
 $(document).ready(function () {
     //判断浏览器
     shareByNavigator();
-    var acResult = getCookie('acResult');
-    if (acResult) {
-        $('.card_result_box').addClass('card_result' + acResult);
+    var acResult = getQueryString('res');
+    var list = ['', '../img/poster_result1.png','../img/poster_result2.png','../img/poster_result3.png','../img/poster_result4.png','../img/poster_result7.png','../img/poster_result7.png','../img/poster_result7.png']
+    if (acResult == 1) {
+        $('#posterResult').attr('src', list[acResult]);
     }
 });
 
