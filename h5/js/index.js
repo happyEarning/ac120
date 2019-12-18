@@ -9,9 +9,6 @@ function getData() {
                 setCookie('acUserInfo', JSON.stringify(result.user));
                 setCookie('lotteryTimes', result.user.times);
                 var lotteryTimes = result.user.times ? result.user.times : 0;
-                if(lotteryTimes===0 && result.user.todayTimes<10){
-                  window.location.href = 'poster.html';
-                }
                 $('#lotteryTimes').text(lotteryTimes);
                 getHistory();
                 $('.bg2').hide();
@@ -115,6 +112,17 @@ $(document).ready(function () {
 
     $(document).on('click', '#cardList li', function () {
         var _this = $(this);
+
+        var acUserInfo = getCookie('acUserInfo');
+        acUserInfo = JSON.parse(acUserInfo);
+        console.log(acUserInfo)
+        if(acUserInfo.times===0 && acUserInfo.todayTimes>=10){
+            alert('今日10次机会已用完，请明日继续参与活动')
+            return
+        }
+        if(acUserInfo.times===0 ){
+            window.location.href = 'poster.html';
+        }
         // _this.removeClass('ac').siblings().addClass('ac');
         commonAjax('/api/user/lottery', 'GET', '', function (result) {
             if (result.success) {

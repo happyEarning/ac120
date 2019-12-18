@@ -86,7 +86,7 @@ module.exports.register = {
       let findUser = await User.findOne({ telephone })
       if (findUser) {
         // todo 计算用户次数
-        let resp = await getUserTimes(curUser)
+        let resp = await getUserTimes(findUser)
         const times = resp.times
         res.$locals.writeData({
           user: {
@@ -164,22 +164,22 @@ module.exports.lottery = {
     },
     // 3 减去次数 & 记录抽奖
     async (req, res, next) => {
-      const randomIndex = req.randomIndex
+      const rewardIndex = req.randomIndex
       let user = req.$injection.user
       let reward = new Reward()
-      reward.type = randomIndex
+      reward.type = rewardIndex
       reward.userRef = user._id
       await reward.save()
       // 减去次数 && 是否已经抽过实物
       const updateData = {
         times: user.times - 1
       }
-      if (updateData === 5 || updateData === 6 || updateData === 7) {
+      if (rewardIndex === 5 || rewardIndex === 6 || rewardIndex === 7) {
         updateData.hasReward = true
       }
       await User.findByIdAndUpdate(user._id, updateData)
       res.$locals.writeData({
-        result: randomIndex,
+        result: rewardIndex,
         recordId: reward._id
       })
       next()
@@ -187,6 +187,15 @@ module.exports.lottery = {
   ]
 }
 
+const nameMap = {
+  1:'AC米兰120周年荣耀时刻线上限量纪念卡牌A',
+  2:'AC米兰120周年荣耀时刻线上限量纪念卡牌B',
+  3:'AC米兰120周年荣耀时刻线上限量纪念卡牌C',
+  4:'AC米兰120周年荣耀时刻线上限量纪念卡牌D',
+  5:'AC米兰120周年官方限量小恶魔吉祥物',
+  6:'AC米兰120周年官方限量小恶魔吉祥物',
+  7:'AC米兰120周年官方限量小恶魔吉祥物',
+}
 // 抽奖历史接口：
 module.exports.history = {
   method: 'get',
@@ -195,10 +204,10 @@ module.exports.history = {
     // 1 判断抽奖次数
     async (req, res, next) => {
       let curUser = req.$injection.user
-      let list = await Reward.find({ userRef: curUser._id, type: { $gt: 1 } })
+      let list = await Reward.aggregate([{ $match: { userRef: curUser._id}}]).group({_id: "$type" })
       res.$locals.writeData({
-        data: list.map(item => ({
-          name: item.type<5? '荣耀时刻线上限量纪念卡':'官方限量小恶魔吉祥物'
+        data:list.map(item=>({
+          name: nameMap[item._id]
         }))
       })
       next()
