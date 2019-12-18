@@ -9,6 +9,9 @@ function getData() {
                 setCookie('acUserInfo', JSON.stringify(result.user));
                 setCookie('lotteryTimes', result.user.times);
                 var lotteryTimes = result.user.times ? result.user.times : 0;
+                if(lotteryTimes===0){
+                    window.location.href = 'poster.html';
+                }
                 $('#lotteryTimes').text(lotteryTimes);
                 getHistory();
                 $('.bg2').hide();
@@ -122,6 +125,7 @@ $(document).ready(function () {
                 _this.removeClass('ac').siblings().addClass('ac');
                 $('#recordId').val(result.recordId);
                 rewardResult = result.result;
+                setCookie('rewardResult', result.result);
                 getLottery(result.result);
             } else {
                 alert(result.err.message);

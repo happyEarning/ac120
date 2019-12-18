@@ -1,5 +1,5 @@
 var nativeShare = new NativeShare()
-var acResult = getQueryString('res');
+var acResult = getCookie('rewardResult') || 1;
 var list = ['', '/poster_result1.png','/poster_result2.png','/poster_result3.png','/poster_result4.png','/poster_result7.png','/poster_result7.png','/poster_result7.png']
 var shareData = {
     title: 'AC米兰120周年活动',
