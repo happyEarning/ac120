@@ -31,9 +31,15 @@ const getUserTimes = async (user) => {
       times: 1,
       todayTimes: 1
     })
-    return 1
+    return {
+      times: 1,
+      todayTimes: 1
+    }
   }
-  return user.times
+  return {
+    times: user.times,
+    todayTimes: user.todayTimes
+  } 
 }
 // 用户登录
 module.exports.get = {
@@ -42,8 +48,11 @@ module.exports.get = {
     async (req, res, next) => {
       const curUser = req.$injection.user
       let  times
+      let  todayTimes
       if(curUser){
-        times = await getUserTimes(curUser)
+        let resp = await getUserTimes(curUser)
+        times = resp.times
+        todayTimes =  resp.todayTimes
       }
       
       res.$locals.writeData({
@@ -51,6 +60,7 @@ module.exports.get = {
           "name": curUser.name,
           "telephone": curUser.telephone,
           times,
+          todayTimes
         } : null
       })
       next()
@@ -76,7 +86,8 @@ module.exports.register = {
       let findUser = await User.findOne({ telephone })
       if (findUser) {
         // todo 计算用户次数
-        const times = await getUserTimes(findUser)
+        let resp = await getUserTimes(curUser)
+        const times = resp.times
         res.$locals.writeData({
           user: {
             name: findUser.name,
@@ -118,7 +129,8 @@ module.exports.lottery = {
       if (curUser.times > 0) {
         next()
       } else {
-        next(new Error('您的抽奖次数已经用完'))
+        const errorMsg = curUser.todayTimes>=10?'今日10次机会已用完，请明日继续参与活动':'您的抽奖次数已经用完'
+        next(new Error(errorMsg))
       }
     },
     // 2 执行抽奖
@@ -239,7 +251,7 @@ module.exports.share = {
       let curUser = req.$injection.user
       let todayTimes = curUser.todayTimes || 1
       let times = curUser.times || 0
-      if (todayTimes <= 10) {
+      if (todayTimes < 10) {
         await User.findByIdAndUpdate(curUser._id, {
           times: times + 1,
           todayTimes: todayTimes + 1

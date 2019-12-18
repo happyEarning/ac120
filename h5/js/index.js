@@ -9,8 +9,8 @@ function getData() {
                 setCookie('acUserInfo', JSON.stringify(result.user));
                 setCookie('lotteryTimes', result.user.times);
                 var lotteryTimes = result.user.times ? result.user.times : 0;
-                if(lotteryTimes===0){
-                    window.location.href = 'poster.html';
+                if(lotteryTimes===0 && result.user.todayTimes<10){
+                  window.location.href = 'poster.html';
                 }
                 $('#lotteryTimes').text(lotteryTimes);
                 getHistory();
@@ -72,7 +72,7 @@ function getLottery(result) {
     setTimeout(function () {
         $('#mask').show();
         $('.card_box').addClass('reback');
-        $('.card_result_box').addClass('card_result' + list[result]);
+        $('.card_result_box').attr('src', 'img'+list[result]);
         setTimeout(function () {
             $('.card1').addClass('add');
             $('.card2').addClass('add');
@@ -103,9 +103,6 @@ function renAnimation() {
     }, 6000)
 }
 
-function closeAnimation(){
-
-}
 
 $(document).ready(function () {
     // 初始化
@@ -119,7 +116,6 @@ $(document).ready(function () {
     $(document).on('click', '#cardList li', function () {
         var _this = $(this);
         // _this.removeClass('ac').siblings().addClass('ac');
-        // getLottery(3);
         commonAjax('/api/user/lottery', 'GET', '', function (result) {
             if (result.success) {
                 _this.removeClass('ac').siblings().addClass('ac');
@@ -174,12 +170,8 @@ $(document).ready(function () {
             $('.light_bright').hide();
             getData();
         });
-        // 保存图片
-        $('#saveCard').click(function () {
-            $('#showSaveBtn').show();
-        });
+       
     })
-
 })
 
 
