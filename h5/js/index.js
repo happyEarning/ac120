@@ -1,30 +1,23 @@
 var rewardResult;
 // 首屏获取数据
 function getData() {
-    // debugger
-    if (document.referrer.indexOf('register.html') === -1) {
-        renAnimation();
-    } else {
-        $('#indPage').show();
-    }
-    setTimeout(function () {
-        commonAjax('/api/user/get', 'GET', '', function (result) {
-            // debugger
-            if (result.success) {
-                if (result.user) {
-                    setCookie('acUserInfo', JSON.stringify(result.user));
-                    setCookie('lotteryTimes', result.user.times);
-                    var lotteryTimes = result.user.times ? result.user.times : 0;
-                    $('#lotteryTimes').text(lotteryTimes);
-                    getHistory();
-                } else {
-                    window.location.href = 'register.html';
-                }
-            }
-        })
-    }, 0)
-    
 
+    commonAjax('/api/user/get', 'GET', '', function (result) {
+        // debugger
+        if (result.success) {
+            if (result.user) {
+                setCookie('acUserInfo', JSON.stringify(result.user));
+                setCookie('lotteryTimes', result.user.times);
+                var lotteryTimes = result.user.times ? result.user.times : 0;
+                $('#lotteryTimes').text(lotteryTimes);
+                getHistory();
+                $('.bg2').hide();
+                $('#indPage').show();
+            } else {
+                window.location.href = 'register.html';
+            }
+        }
+    })
 }
 //渲染抽奖图片
 function renderCardList() {
@@ -94,25 +87,31 @@ function renAnimation() {
     $('#bg1').addClass('ac');
     setTimeout(function () {
         $('#bgBox1').addClass('fadeOut').removeClass('fadeIn');
-        setTimeout(function () {
-            $('#bgBox2').addClass('fadeIn');
-            $('#bg2').addClass('ac');
-            setTimeout(function () {
-                $('#bgBox2').addClass('fadeOut').removeClass('fadeIn');
-                setTimeout(function () {
-                    $('.bg2').hide();
-                    $('#indPage').show();
-                }, 1000)
-            }, 2000)
-        }, 1000);
     }, 2000)
+    setTimeout(function () {
+        $('#bgBox2').addClass('fadeIn');
+        $('#bg2').addClass('ac');
+    }, 3000);
+    setTimeout(function () {
+        $('#bgBox2').addClass('fadeOut').removeClass('fadeIn');
+    }, 5000)
+    setTimeout(function () {
+        getData()
+    }, 6000)
+}
+
+function closeAnimation(){
+
 }
 
 $(document).ready(function () {
     // 初始化
     renderCardList();
-    getData();
-
+    if (document.referrer.indexOf('register.html') === -1) {
+        renAnimation();
+    } else {
+        getData();
+    }
 
     $(document).on('click', '#cardList li', function () {
         var _this = $(this);
