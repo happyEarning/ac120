@@ -2,7 +2,7 @@ const _ = require('lodash')
 const fs = require('fs')
 const path = require('path')
 const moment = require('moment')
-const XLSX  = require('xlsx')
+const XLSX = require('xlsx')
 const redis = require('../../runtime/redis')
 const config = require('../../config')
 const User = require('../../models/user'),
@@ -29,7 +29,7 @@ const getUserTimes = async (user) => {
   return {
     times: user.times,
     todayTimes: user.todayTimes
-  } 
+  }
 }
 // 用户登录
 module.exports.get = {
@@ -37,14 +37,14 @@ module.exports.get = {
   middlewares: [
     async (req, res, next) => {
       const curUser = req.$injection.user
-      let  times
-      let  todayTimes
-      if(curUser){
+      let times
+      let todayTimes
+      if (curUser) {
         let resp = await getUserTimes(curUser)
         times = resp.times
-        todayTimes =  resp.todayTimes
+        todayTimes = resp.todayTimes
       }
-      
+
       res.$locals.writeData({
         user: curUser ? {
           "name": curUser.name,
@@ -95,11 +95,13 @@ module.exports.register = {
         newUser.refreshDate = new Date()
         newUser.todayTimes = 1
         newUser.save(err => {
-          res.$locals.writeData({ user: {
-            name: newUser.name,
-            telephone: newUser.telephone,
-            times:1
-          } })
+          res.$locals.writeData({
+            user: {
+              name: newUser.name,
+              telephone: newUser.telephone,
+              times: 1
+            }
+          })
           req.$session.setUser(newUser)
           next()
         })
@@ -112,6 +114,10 @@ module.exports.register = {
 module.exports.lottery = {
   method: 'get',
   middlewares: [
+    (req, res, next) => {
+      let curUser = req.$injection.user
+      next()
+    },
     validateLogin,
     // 1 判断抽奖次数
     (req, res, next) => {
@@ -119,7 +125,7 @@ module.exports.lottery = {
       if (curUser.times > 0) {
         next()
       } else {
-        const errorMsg = curUser.todayTimes>=10?'今日10次机会已用完，请明日继续参与活动':'您的抽奖次数已经用完'
+        const errorMsg = curUser.todayTimes >= 10 ? '今日10次机会已用完，请明日继续参与活动' : '您的抽奖次数已经用完'
         next(new Error(errorMsg))
       }
     },
@@ -130,13 +136,19 @@ module.exports.lottery = {
       // 先判断用户是否有过实物奖励
       if (!curUser.hasReward) {
         const client = redis.client
-        // const redisKey= moment().format('YYYY-MM-DD')
-        const redisKey = '2019-12-20'
+        const redisKey = moment().format('YYYY-MM-DD')
         let rewardData = await client.getAsync(redisKey)
-        rewardData = JSON.parse(rewardData)
+        rewardData = rewardData ? JSON.parse(rewardData) : {}
         // 如果还有奖品 并且抽中了
         if (rewardData['5'] || rewardData['6'] || rewardData['7']) {
-          const tempRandomIndex = getRandomIndex(7)
+          let tempRandomIndex = getRandomIndex(300)
+          if (tempRandomIndex == 99) {
+            tempRandomIndex = 5
+          } else if (tempRandomIndex == 199) {
+            tempRandomIndex = 6
+          } else if (tempRandomIndex == 299) {
+            tempRandomIndex = 7
+          }
           // 抽中奖品
           if (rewardData[tempRandomIndex]) {
             randomIndex = tempRandomIndex
@@ -178,13 +190,13 @@ module.exports.lottery = {
 }
 
 const nameMap = {
-  1:'AC米兰120周年尊享线上纪念卡',
-  2:'AC米兰120周年荣耀时刻线上限量纪念卡牌A',
-  3:'AC米兰120周年荣耀时刻线上限量纪念卡牌B',
-  4:'AC米兰120周年荣耀时刻线上限量纪念卡牌C',
-  5:'AC米兰120周年官方限量珍藏吉祥物玩偶主场款',
-  6:'AC米兰120周年官方限量珍藏吉祥物玩偶主场款',
-  7:'AC米兰120周年官方稀有珍藏吉祥物玩偶一对',
+  1: 'AC米兰120周年尊享线上纪念卡',
+  2: 'AC米兰120周年荣耀时刻线上限量纪念卡牌A',
+  3: 'AC米兰120周年荣耀时刻线上限量纪念卡牌B',
+  4: 'AC米兰120周年荣耀时刻线上限量纪念卡牌C',
+  5: 'AC米兰120周年官方限量珍藏吉祥物玩偶主场款',
+  6: 'AC米兰120周年官方限量珍藏吉祥物玩偶主场款',
+  7: 'AC米兰120周年官方稀有珍藏吉祥物玩偶一对',
 }
 
 
@@ -196,9 +208,9 @@ module.exports.history = {
     // 1 判断抽奖次数
     async (req, res, next) => {
       let curUser = req.$injection.user
-      let list = await Reward.aggregate([{ $match: { userRef: curUser._id}}]).group({_id: "$type" })
+      let list = await Reward.aggregate([{ $match: { userRef: curUser._id } }]).group({ _id: "$type" })
       res.$locals.writeData({
-        data:list.map(item=>({
+        data: list.map(item => ({
           name: nameMap[item._id]
         }))
       })
@@ -258,7 +270,7 @@ module.exports.share = {
           todayTimes: todayTimes + 1
         })
         res.$locals.writeData({
-          times:  times + 1,
+          times: times + 1,
         })
         next()
       } else {
@@ -276,7 +288,7 @@ module.exports.exportUser = {
   method: 'get',
   middlewares: [
     (req, res, next) => {
-      if (req.query.key!=='ac120AdminKey') {
+      if (req.query.key !== 'ac120AdminKey') {
         next(new Error('没有权限'))
       } else {
         next()
@@ -284,12 +296,12 @@ module.exports.exportUser = {
     },
     async (req, res, next) => {
       let book = XLSX.utils.book_new()
-      let data = [['姓名','手机号','注册时间']]
+      let data = [['姓名', '手机号', '注册时间']]
       const userList = await User.find()
-      const rows = userList.map(user=>([user.name,user.telephone,moment(user.createdAt).format('YYYY-MM-DD HH:mm:ss')]))
+      const rows = userList.map(user => ([user.name, user.telephone, moment(user.createdAt).format('YYYY-MM-DD HH:mm:ss')]))
       var sheet = XLSX.utils.aoa_to_sheet(data.concat(rows))
       XLSX.utils.book_append_sheet(book, sheet, 'Sheet1')
-    
+
       let fileName = path.join(config.download.tmpDir, `用户列表_${moment().format('YYYYMMDDHHmmss')}.xlsx`)
       XLSX.writeFile(book, fileName)
       res.download(fileName, (err) => {
@@ -304,7 +316,7 @@ module.exports.exportRecord = {
   method: 'get',
   middlewares: [
     (req, res, next) => {
-      if (req.query.key!=='ac120AdminKey') {
+      if (req.query.key !== 'ac120AdminKey') {
         next(new Error('没有权限'))
       } else {
         next()
@@ -312,9 +324,9 @@ module.exports.exportRecord = {
     },
     async (req, res, next) => {
       let book = XLSX.utils.book_new()
-      let data = [['姓名','手机号','收货地址','奖品','中奖时间']]
+      let data = [['姓名', '手机号', '收货地址', '奖品', '中奖时间']]
       let list = await Reward.find({ type: { $gt: 4 } }).populate('userRef')
-      const rows = list.map(item=>([
+      const rows = list.map(item => ([
         item.name || item.userRef.name,
         item.telephone || item.userRef.telephone,
         item.address,
@@ -322,7 +334,7 @@ module.exports.exportRecord = {
         moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss')]))
       var sheet = XLSX.utils.aoa_to_sheet(data.concat(rows))
       XLSX.utils.book_append_sheet(book, sheet, 'Sheet1')
-    
+
       let fileName = path.join(config.download.tmpDir, `中奖列表_${moment().format('YYYYMMDDHHmmss')}.xlsx`)
       XLSX.writeFile(book, fileName)
       res.download(fileName, (err) => {
@@ -337,7 +349,7 @@ module.exports.reset = {
   method: 'get',
   middlewares: [
     (req, res, next) => {
-      if (req.query.key!=='ac120AdminKey') {
+      if (req.query.key !== 'ac120AdminKey') {
         next(new Error('没有权限'))
       } else {
         next()
