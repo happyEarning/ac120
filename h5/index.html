@@ -15,7 +15,8 @@
 </head>
 
 <body>
-    <div class="container">
+    <!-- 主页面 -->
+    <div class="container" id="page-main">
         <!-- 页面1 -->
         <div class="bg2" id="bgBox1">
             <div class="slogon" id="bg1"></div>
@@ -102,11 +103,74 @@
         <audio src="./music/bg.mp3" id="bg-music" preload controls class="audio bg-music"></audio>
         <audio src="./music/music1.mp3" preload class="audio card-music"></audio>
     </div>
+    <!-- 注册 -->
+    <div class="container" id="page-register">
+        <div class="register_banner">
+            <div class="banner"></div>
+            <p class="register_tit">百年荣耀与你共享<br />参加AC米兰120周年活动，赢120周年限量电子卡<br />更有120年特别版吉祥物实体玩偶等着你！</p>
+        </div>
+        <div class="register_form">
+            <div><input type="text" placeholder="请填写您的姓名" class="register_form_item" id="registerName" maxlength="25">
+            </div>
+            <div><input type="text" placeholder="请填写您的手机号" class="register_form_item" id="registerPhone" maxlength="25">
+            </div>
+            <div class="register_tips">*请务必填写真实信息为了方便领取奖品</div>
+            <div class="register_checkbox">
+                <div class="register_checkbar">
+                    <input type="checkbox" id="registerCheck" class="register_check" />
+                    <label for="registerCheck"></label>
+                    <a id="registerLink">我已同意游戏状态</a>
+                </div>
+            </div>
+            <div><button class="big_btn" id="playGame">进入游戏</button></div>
+        </div>
+        <div class="agreement_wrapper" id="agreementWrapper" style="display: none;">
+            <div class="close_btn" id="closeBtn"></div>
+            <div class="agreement_box">
+                <div class="agreement_content">
+                    <h1 class="agreement_content_title">活动细则</h1>
+                    <div>
+                        <h4>活动参与方式：</h4>
+                        <p class="text_indent">填写手机号、完善个人信息，参与抽卡活动，即有机会获取AC米兰120周年线上限量卡牌，及吉祥物玩偶等实物礼品。</p
+                            class="text_indent">
+                    </div>
+                    <div>
+                        <p>注意事项：</p>
+                        <p class="text_indent">1.每个手机号初始拥有一次抽卡机会，通过分享可获取额外抽卡机会。每个手机号每日的抽卡次数上限为10次(包含初始的1次机会)。 </p>
+                        <p class="text_indent">2.请提供准确个人信息以保证奖品顺利发放，如因用户填写个人信息不全、错误等原因造成奖品无法发放，视为自动放弃获奖资格。</p>
+                        <p class="text_indent">3.如发现参与用户通过技术手段获得奖品，AC米兰足球俱乐部有权取消该用户参与资格及获得的奖品，并公布以示警告。</p>
+                        <p class="text_indent">4.如发现有人对本次活动进行恶意破坏，AC米兰足球俱乐部有权保留证据并对相关人员追究法律责任及要求其赔偿对本次活动造成的损失。</p>
+                        <p class="text_indent">5.如遇不可抗力或技术故障等原因无法继续进行活动，AC米兰足球俱乐部有权暂停、推迟或取消活动。</p>
+                        <p>*本活动最终解释权归AC米兰足球俱乐部所有</p>
+                    </div>
+                </div>
+            </div>
+            <div class="agreement_footer">
+                <button class="sm_btn" id="agreeBtn">同意</button>
+            </div>
+        </div>
+    </div>
+    <!-- 海报 -->
+    <div class="container poster-view" id="page-poster">
+        <div class="close_btn"></div>
+        <div class="poster_bg">
+            <img src="img/poster_result1.png" alt="" id="posterResult">
+        </div>
+        <p class="ans_img_tips">长按保存图片到本地</p>
+        <div class="poster_share_box">
+            <div class="poster_share_bar">
+                <div class="share_wb" onclick="shareByNavigator('weibo')" id="shareWb"></div>
+                <div class="share_wx" onclick="shareByNavigator('wechatFriend')" id="shareWx"></div>
+            </div>
+        </div>
 
-
+    </div>
     <script src="js/zepto.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/index.js?v=2019121801"></script>
+    <script src="js/register.js"></script>
+    <script src="js/NativeShare.js"></script>
+    <script src="js/poster.js"></script>
 </body>
 
 </html>
