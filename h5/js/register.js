@@ -34,16 +34,12 @@ $(document).ready(function() {
                 "name": registerName,
                 "telephone": registerPhone,
             }
-            // var acUserInfo = getCookie('acUserInfo');
-            // if (acUserInfo) {
-            //     params._id = acUserInfo._id;
-            // }
             $('#playGame').attr('disabled', true);
             commonAjax('/api/user/register', 'POST', params, function(result) {
                 $('#playGame').attr('disabled', false);
                 if (result.success) {
                     setCookie('lotteryTimes', result.times);
-                    window.location.href = 'index.html';
+                    getData()
                 }
             })
             

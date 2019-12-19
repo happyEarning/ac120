@@ -564,6 +564,7 @@ input[type=checkbox] {
     position: relative;
     padding-top: .43rem;
     color: #B6B6B6;
+    text-align: center;
 }
 
 .ans_btn_tips:before {
@@ -725,4 +726,9 @@ input[type=checkbox] {
     height: 54%;
     transform: translate(-50%, 0);
     opacity: 0;
+}
+
+#page-register,
+#page-poster{
+    display: none;
 }
