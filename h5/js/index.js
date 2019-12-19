@@ -1,5 +1,8 @@
 var rewardResult;
 var rewardTexts = {
+    '2': '荣耀时刻线上限量纪念卡牌A',
+    '3': '荣耀时刻线上限量纪念卡牌B',
+    '4': '荣耀时刻线上限量纪念卡牌C',
     '5': '官方限量珍藏吉祥物玩偶主场款',
     '6': '官方限量珍藏吉祥物玩偶客场款',
     '7': '官方稀有珍藏吉祥物玩偶一对'
@@ -60,6 +63,7 @@ function getLottery(result) {
         $('.ans_content').hide().eq(0).show();
     } else if (result > 1 && result < 5) {
         $('.ans_content').hide().eq(1).show();
+        $('.record_text2').text(rewardTexts[result.toString()])
     } else {
         var acUserInfo = getCookie('acUserInfo');
         if (acUserInfo) {
