@@ -1,6 +1,7 @@
 var nativeShare = new NativeShare()
-var acResult = getCookie('rewardResult') || 1;
-var list = ['', '/poster_result1.png', '/poster_result2.png', '/poster_result3.png', '/poster_result4.png', '/poster_result7.png', '/poster_result7.png', '/poster_result7.png']
+var acResult = parseInt(getCookie('rewardResult') || 1);
+
+var list = ['', './img/poster_result1.png', './img/poster_result2.png', './img/poster_result3.png', './img/poster_result4.png', './img/poster_result7.png', './img/poster_result7.png', './img/poster_result7.png']
 var shareData = {
     title: 'AC米兰120周年活动',
     desc: 'AC米兰120周年活动',
@@ -77,6 +78,7 @@ function nativeShareSvc (command) {
 }
 
 $(document).ready(function () {
+    $("#posterResult").attr('src', list[acResult])
     //判断浏览器
     var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
     if (ua.match(/MicroMessenger/i) == "micromessenger") {//在微信中打开
