@@ -716,3 +716,13 @@ input[type=checkbox] {
     text-align: center;
     font-size: 16px;
 }
+
+.img-cover {
+    position: absolute;
+    top: 1.6rem;
+    left: 50%;
+    width: 4.266667rem;
+    height: 54%;
+    transform: translate(-50%, 0);
+    opacity: 0;
+}

@@ -37,7 +37,7 @@ var browser = {
     language: (navigator.browserLanguage || navigator.language).toLowerCase()
 }
 
-function getShareNum() {
+function getShareNum () {
     commonAjax('/api/user/share', 'POST', '', function (result) {
         if (result.success) {
         } else {
@@ -47,12 +47,12 @@ function getShareNum() {
 }
 
 function shareByNavigator (command) {
-    getShareNum();
     var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
     if (ua.match(/MicroMessenger/i) == "micromessenger") {//在微信中打开
         alert('请长按图片分享给好友或分享到朋友圈')
         return;
     } else if (navigator.share && command != 'weibo') {//在safari浏览器打开s
+        getShareNum();
         navigator.share({
             title: 'AC米兰120周年活动',
             url: 'https://project.sdsinfotech.com/ACM120/index.html'
@@ -62,6 +62,7 @@ function shareByNavigator (command) {
             .catch(console.error);
 
     } else {
+        getShareNum();
         nativeShareSvc(command)
     }
 }
