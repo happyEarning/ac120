@@ -10,7 +10,14 @@
     color: #fff;
     overflow-x: hidden;
 }
-.bg2{
+
+.audio {
+    opacity: 0;
+    position: absolute;
+    z-index: -999;
+}
+
+.bg2 {
     position: absolute;
     top: 0;
     left: 0;
@@ -29,7 +36,8 @@
     z-index: 999;
     opacity: 0;
 }
-.fadeIn{
+
+.fadeIn {
     -o-animation: fadeIn 2s ease;
     -ms-animation: fadeIn 2s ease;
     -moz-animation: fadeIn 2s ease;
@@ -37,7 +45,8 @@
     animation: fadeIn 2s ease;
     opacity: 1;
 }
-.fadeOut{
+
+.fadeOut {
     -o-animation: fadeOut 1s ease;
     -ms-animation: fadeOut 1s ease;
     -moz-animation: fadeOut 1s ease;
@@ -45,25 +54,29 @@
     animation: fadeOut 1s ease;
     /* opacity: 0; */
 }
-.slogon{
+
+.slogon {
     width: 7.2rem;
     height: 3.36rem;
     background: url(../img/slogan.png) no-repeat;
     background-size: 100% 100%;
     filter: blur(6px);
 }
-.slogon.ac{
+
+.slogon.ac {
     filter: blur(0);
     transition: all 2s ease;
 }
-.title{
+
+.title {
     width: 6.16rem;
     height: 4.32rem;
     background: url(../img/title.png) no-repeat;
     background-size: 100% 100%;
     filter: blur(6px);
 }
-.title.ac{
+
+.title.ac {
     filter: blur(0);
     transition: all 2s ease;
 }
@@ -172,7 +185,8 @@
     text-align: center;
     margin-bottom: .67rem;
 }
-.register_check +label{
+
+.register_check+label {
     display: inline-block;
     position: absolute;
     left: 0;
@@ -182,23 +196,25 @@
     margin-right: 3px;
     cursor: pointer;
     background: #fff;
-    border:1px #EAC000 solid;
+    border: 1px #EAC000 solid;
     border-radius: 2px;
     vertical-align: middle;
 }
 
-.register_check:checked +label::before{
+.register_check:checked+label::before {
     display: block;
     content: "\2714";
     text-align: center;
     font-size: 12px;
-    color: #EAC000!important;
+    color: #EAC000 !important;
     /* margin-top:-5px; */
 }
-input[type=checkbox]{
-	visibility: hidden;
+
+input[type=checkbox] {
+    visibility: hidden;
 }
-.register_checkbar{
+
+.register_checkbar {
     display: inline-block;
     position: relative;
     text-align: center;
@@ -206,6 +222,7 @@ input[type=checkbox]{
     height: 15px;
     line-height: 15px;
 }
+
 /* .register_checkbox input {
     -webkit-appearance: none;
     display: inline-block;
@@ -283,20 +300,23 @@ input[type=checkbox]{
 
 /* 活动页面 */
 
-.light_box{
+.light_box {
     /* width: 90%; */
     /* height: 7.47rem; */
     /* position: absolute; */
     /* top: 1.29rem; */
     /* overflow: hidden; */
 }
-.light_box .light{
+
+.light_box .light {
     transform: scale(.8);
     top: -1.49rem;
 }
-.light_box .light_bright{
+
+.light_box .light_bright {
     transform: scale(.8);
 }
+
 .light {
     position: absolute;
     left: -2.25rem;
@@ -307,7 +327,8 @@ input[type=checkbox]{
     background-size: 100% 100%;
     /* animation: circle 10s linear infinite; */
 }
-.light.ac{
+
+.light.ac {
     animation: circle 10s linear infinite;
 }
 
@@ -461,9 +482,11 @@ input[type=checkbox]{
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
-.card_result_box img{
+
+.card_result_box img {
     width: 100%;
 }
+
 .card_result1 {
     background-image: url(../img/result1.png);
 }
@@ -602,9 +625,11 @@ input[type=checkbox]{
     color: #EAC000;
     text-align: center;
 }
-.poster_bg img{
+
+.poster_bg img {
     width: 100%;
 }
+
 .poster_box {
     /* position: absolute; */
     /* top: 1.49rem; */
@@ -645,12 +670,15 @@ input[type=checkbox]{
     padding: 0 2rem;
     margin: .93rem auto 0;
 }
-.poster_share_bar{
+
+.poster_share_bar {
     display: flex;
     width: 100%;
     /* justify-content: space-between; */
 }
-.poster_share_box .share_wb, .poster_share_box .share_wx {
+
+.poster_share_box .share_wb,
+.poster_share_box .share_wx {
     width: 2.13rem;
     height: 1.79rem;
     background-repeat: no-repeat;
@@ -665,12 +693,13 @@ input[type=checkbox]{
 .share_wx {
     background-image: url(../img/btn_share_wechat.png);
 }
-#ansBox{
+
+#ansBox {
     position: relative;
     z-index: 1000;
 }
 
-.poster-view .close_btn{
+.poster-view .close_btn {
     position: absolute;
     z-index: 99;
     right: 1.1rem;

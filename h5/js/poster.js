@@ -46,11 +46,11 @@ function getShareNum() {
     })
 }
 
-function shareByNavigator(command) {
+function shareByNavigator (command) {
     getShareNum();
     var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
     if (ua.match(/MicroMessenger/i) == "micromessenger") {//在微信中打开
-        alert('请点击右上角分享给好友或分享到朋友圈')
+        alert('请长按图片分享给好友或分享到朋友圈')
         return;
     } else if (navigator.share && command != 'weibo') {//在safari浏览器打开s
         navigator.share({
@@ -66,7 +66,7 @@ function shareByNavigator(command) {
     }
 }
 
-function nativeShareSvc(command) {
+function nativeShareSvc (command) {
     try {
         nativeShare.call(command);
     } catch (err) {
@@ -90,5 +90,22 @@ $(document).ready(function () {
     $('.close_btn').click(function () {
         location.href = 'index.html'
     })
+    var timeOutEvent
+    $("#posterResult").on({
+        touchstart: function (e) {
+            timeOutEvent = setTimeout(function () {
+                getShareNum()
+            }, 1000)
+        },
+        touchmove: function (e) {
+            clearTimeout(timeOutEvent)
+            timeOutEvent = 0
+            e.preventDefault()
+        },
+        touchend: function (e) {
+            clearTimeout(timeOutEvent)
+            return false
+        }
+    });
 });
 
