@@ -13,16 +13,6 @@ const getRandomIndex = (max) => {
   return Math.floor(Math.random() * max) + 1
 }
 
-const rewardMap = {
-  1: '谢谢参与',
-  2: '问答卡1',
-  3: '问答卡2',
-  4: '问答卡3',
-  5: '吉祥物主场球衣',
-  6: '吉祥物客场球衣',
-  7: '礼包奖品',
-}
-
 const getUserTimes = async (user) => {
   // 先判断日期 如果日期更新了 就设置成默认1
   if (!moment(user.refreshDate).isSame(moment(), 'day')) {
@@ -192,10 +182,12 @@ const nameMap = {
   2:'AC米兰120周年荣耀时刻线上限量纪念卡牌B',
   3:'AC米兰120周年荣耀时刻线上限量纪念卡牌C',
   4:'AC米兰120周年荣耀时刻线上限量纪念卡牌D',
-  5:'AC米兰120周年官方限量小恶魔吉祥物',
-  6:'AC米兰120周年官方限量小恶魔吉祥物',
-  7:'AC米兰120周年官方限量小恶魔吉祥物',
+  5:'AC米兰120周年官方限量珍藏吉祥物玩偶主场款',
+  6:'AC米兰120周年官方限量珍藏吉祥物玩偶主场款',
+  7:'AC米兰120周年官方稀有珍藏吉祥物玩偶一对',
 }
+
+
 // 抽奖历史接口：
 module.exports.history = {
   method: 'get',
@@ -326,7 +318,7 @@ module.exports.exportRecord = {
         item.name || item.userRef.name,
         item.telephone || item.userRef.telephone,
         item.address,
-        rewardMap[item.type],
+        nameMap[item.type],
         moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss')]))
       var sheet = XLSX.utils.aoa_to_sheet(data.concat(rows))
       XLSX.utils.book_append_sheet(book, sheet, 'Sheet1')
