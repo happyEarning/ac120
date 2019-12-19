@@ -5,7 +5,7 @@ var rewardTexts = {
     '7': '官方稀有珍藏吉祥物玩偶一对'
 }
 // 首屏获取数据
-function getData () {
+function getData() {
 
     commonAjax('/api/user/get', 'GET', '', function (result) {
         // debugger
@@ -25,7 +25,7 @@ function getData () {
     })
 }
 //渲染抽奖图片
-function renderCardList () {
+function renderCardList() {
     var html = '';
     for (var i = 0; i < 9; i++) {
         html += '<li><img src="img/card_back.png" alt=""></li>';
@@ -33,7 +33,7 @@ function renderCardList () {
     $('#cardList').append(html);
 }
 // 获取历史奖项
-function getHistory () {
+function getHistory() {
     var html = '';
     commonAjax('/api/user/history', 'GET', '', function (result) {
         if (result.success) {
@@ -55,7 +55,7 @@ function getHistory () {
     })
 }
 //获取奖品1 谢谢参与 2 问答卡 3 问答卡2 4 问答卡3 5 吉祥物主场球衣 6 吉祥物客场球衣 7 礼包奖品
-function getLottery (result) {
+function getLottery(result) {
     if (result == 1) {
         $('.ans_content').hide().eq(0).show();
     } else if (result > 1 && result < 5) {
@@ -92,7 +92,7 @@ function getLottery (result) {
     }, 700);
 }
 
-function renAnimation () {
+function renAnimation() {
     $('#bgBox1').addClass('fadeIn');
     $('#bg1').addClass('ac');
     setTimeout(function () {
@@ -111,7 +111,7 @@ function renAnimation () {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    function audioAutoPlay () {
+    function audioAutoPlay() {
         var audio_ = document.getElementById('bg-music')
         document.addEventListener("WeixinJSBridgeReady", function () {
             audio_.play()
@@ -131,19 +131,23 @@ $(document).ready(function () {
     $(document).on('click', '#cardList li', function () {
         var _this = $(this);
 
-        var acUserInfo = getCookie('acUserInfo');
-        acUserInfo = JSON.parse(acUserInfo);
-        console.log(acUserInfo)
-        if (acUserInfo.times === 0 && acUserInfo.todayTimes >= 10) {
-            alert('今日10次机会已用完，请明日继续参与活动')
-            return
+        try {
+            var acUserInfo = getCookie('acUserInfo');
+            acUserInfo = JSON.parse(acUserInfo);
+            if (acUserInfo.times === 0 && acUserInfo.todayTimes >= 10) {
+                alert('今日10次机会已用完，请明日继续参与活动')
+                return
+            }
+            if (acUserInfo.times === 0) {
+                window.location.href = 'poster.html';
+            }
+            $('.bg-music')[0].pause()
+            $('.card-music')[0].currentTime = 0
+            $('.card-music')[0].play()
+        } catch(e){
+            alert(JSON.stringify(e))
         }
-        if (acUserInfo.times === 0) {
-            window.location.href = 'poster.html';
-        }
-        $('.bg-music')[0].pause()
-        $('.card-music')[0].currentTime = 0
-        $('.card-music')[0].play()
+
         // _this.removeClass('ac').siblings().addClass('ac');
         commonAjax('/api/user/lottery', 'GET', '', function (result) {
             if (result.success) {

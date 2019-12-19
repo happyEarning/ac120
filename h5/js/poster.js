@@ -96,7 +96,7 @@ $(document).ready(function () {
         touchstart: function (e) {
             timeOutEvent = setTimeout(function () {
                 getShareNum()
-            }, 1000)
+            }, 300)
         },
         touchmove: function (e) {
             clearTimeout(timeOutEvent)
