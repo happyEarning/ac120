@@ -559,7 +559,8 @@ input[type=checkbox] {
     justify-content: space-between;
 }
 
-.ans_btn_tips {
+.ans_btn_tips,
+.ans_img_tips {
     position: relative;
     padding-top: .43rem;
     color: #B6B6B6;
