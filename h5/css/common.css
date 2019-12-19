@@ -556,7 +556,7 @@ input[type=checkbox] {
     width: 8rem;
     margin: .67rem auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .ans_btn_tips,
