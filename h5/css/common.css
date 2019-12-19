@@ -432,7 +432,8 @@ input[type=checkbox] {
     width: 100%;
     min-height: 100%;
     z-index: 99;
-    /* overflow: hidden; */
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .card_box {
@@ -678,6 +679,7 @@ input[type=checkbox] {
 .poster_share_bar {
     display: flex;
     width: 100%;
+    margin-bottom: 20px;
     /* justify-content: space-between; */
 }
 
@@ -725,4 +727,9 @@ input[type=checkbox] {
     height: 54%;
     transform: translate(-50%, 0);
     opacity: 0;
+}
+
+.poster-view{
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }

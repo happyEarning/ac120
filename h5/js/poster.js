@@ -103,7 +103,6 @@ $(document).ready(function () {
         touchmove: function (e) {
             clearTimeout(timeOutEvent)
             timeOutEvent = 0
-            e.preventDefault()
         },
         touchend: function (e) {
             clearTimeout(timeOutEvent)
