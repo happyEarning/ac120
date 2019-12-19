@@ -4,17 +4,17 @@ var acResult = 1;
 var list = ['', './img/poster_result1.png', './img/poster_result2.png', './img/poster_result3.png', './img/poster_result4.png', './img/poster_result7.png', './img/poster_result7.png', './img/poster_result7.png']
 function initShare() {
     var shareData = {
-        title: 'AC米兰120周年活动',
-        desc: 'AC米兰120周年活动',
+        title: '偷偷告诉你，这是我们的小秘密',
+        desc: 'AC米兰120周年惊喜大奖藏在这里！',
         // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
         link: 'https://project.sdsinfotech.com/ACM120/index.html',
         icon: 'https://project.sdsinfotech.com/ACM120/img' + list[acResult],
         // 不要过于依赖以下两个回调，很多浏览器是不支持的
         success: function () {
-            alert('success')
+            // alert('success')
         },
         fail: function () {
-            alert('fail')
+            // alert('fail')
         }
     }
     nativeShare.setShareData(shareData)
@@ -48,9 +48,13 @@ function getShareNum () {
         }
     })
 }
+var ua = navigator.userAgent.toLowerCase();
+if (ua.match(/MicroMessenger/i) == "micromessenger") {//在微信中打开
+    $('.share_wb').hide()
+}
 
 function shareByNavigator (command) {
-    var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+  //获取判断用的对象
     if (ua.match(/MicroMessenger/i) == "micromessenger") {//在微信中打开
         alert('请长按图片分享给好友或分享到朋友圈')
         return;
@@ -84,7 +88,7 @@ function initPosterPage(params) {
     initShare()
     $("#posterResult").attr('src', list[acResult])
 
-    $('.close_btn').click(function () {
+    $('#page-poster .close_btn').click(function () {
         getData();
         $('#page-main').show().siblings('div').hide()
     })

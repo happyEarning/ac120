@@ -142,13 +142,6 @@ module.exports.lottery = {
         // 如果还有奖品 并且抽中了
         if (rewardData['5'] || rewardData['6'] || rewardData['7']) {
           let tempRandomIndex = getRandomIndex(300)
-          if (tempRandomIndex == 99) {
-            tempRandomIndex = 5
-          } else if (tempRandomIndex == 199) {
-            tempRandomIndex = 6
-          } else if (tempRandomIndex == 299) {
-            tempRandomIndex = 7
-          }
           // 抽中奖品
           if (rewardData[tempRandomIndex]) {
             randomIndex = tempRandomIndex

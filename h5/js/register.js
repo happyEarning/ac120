@@ -4,7 +4,7 @@ $(document).ready(function() {
         $('#agreementWrapper').show();
     })
     //关闭游戏说明
-    $('#closeBtn').click(function(){
+    $('#page-register #closeBtn').click(function(){
         $('#agreementWrapper').hide();
     })
     //同意游戏说明

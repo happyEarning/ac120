@@ -14,7 +14,6 @@ function getData () {
         // debugger
         if (result.success) {
             if (result.user) {
-                initMainPage()
                 $('#page-main').show().siblings('div').hide()
                 setCookie('acUserInfo', JSON.stringify(result.user));
                 setCookie('lotteryTimes', result.user.times);
@@ -145,12 +144,14 @@ function initMainPage () {
             }
             if (acUserInfo.times === 0) {
                 showPosterPage()
+                return
             }
             $('.bg-music')[0].pause()
             $('.card-music')[0].currentTime = 0
             $('.card-music')[0].play()
         } catch (e) {
             alert(JSON.stringify(e))
+            return
         }
 
         // _this.removeClass('ac').siblings().addClass('ac');
@@ -165,44 +166,46 @@ function initMainPage () {
                 alert(result.err.message);
             }
         })
-        //分享按钮
-        $('.share_btn').click(function () {
-            showPosterPage()
-        });
+       
+    })
 
-        // 提交
-        $('#submitBtn').click(function () {
-            var acUserName = $('#acUserName').val().trim();
-            var acUserAddress = $('#acUserAddress').val().trim();
-            var recordId = $('#recordId').val();
-            if (!acUserName) {
-                alert('请输入姓名');
-                return;
-            } else if (!acUserAddress) {
-                alert('请输入收获地址');
-                return;
-            } else {
-                var params = {
-                    name: acUserName,
-                    address: acUserAddress,
-                    recordId: recordId
-                };
-                $('#submitBtn').attr('disabled', true);
-                commonAjax('/api/user/record', 'POST', params, function (result) {
-                    if (result.success) {
-                        showPosterPage()
-                    } else {
-                        alert(result.err.message)
-                    }
-                    $('#submitBtn').removeAttr('disabled')
-                })
-            }
-        });
+     //分享按钮
+     $('.share_btn').click(function () {
+        showPosterPage()
+    });
 
-        $('#closeBtn').click(function () {
-            mainClose()
-            getData()
-        })
+    // 提交
+    $('#submitBtn').click(function () {
+        var acUserName = $('#acUserName').val().trim();
+        var acUserAddress = $('#acUserAddress').val().trim();
+        var recordId = $('#recordId').val();
+        if (!acUserName) {
+            alert('请输入姓名');
+            return;
+        } else if (!acUserAddress) {
+            alert('请输入收获地址');
+            return;
+        } else {
+            var params = {
+                name: acUserName,
+                address: acUserAddress,
+                recordId: recordId
+            };
+            $('#submitBtn').attr('disabled', true);
+            commonAjax('/api/user/record', 'POST', params, function (result) {
+                if (result.success) {
+                    showPosterPage()
+                } else {
+                    alert(result.err.message)
+                }
+                $('#submitBtn').removeAttr('disabled')
+            })
+        }
+    });
+
+    $('#page-main #closeBtn').click(function () {
+        mainClose()
+        getData()
     })
 }
 
@@ -225,4 +228,5 @@ $(document).ready(function () {
     // 初始化
     renderCardList()
     renAnimation()
+    initMainPage()
 })
