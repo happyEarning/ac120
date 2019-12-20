@@ -97,7 +97,7 @@ function initPosterPage(params) {
         touchstart: function (e) {
             timeOutEvent = setTimeout(function () {
                 getShareNum()
-            }, 300)
+            }, 600)
         },
         touchmove: function (e) {
             clearTimeout(timeOutEvent)
