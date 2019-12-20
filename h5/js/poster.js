@@ -1,8 +1,9 @@
 var nativeShare = new NativeShare()
 var acResult = 1;
-
+var addable = false
 var list = ['', '/poster_result1.png', '/poster_result2.png', '/poster_result3.png', '/poster_result4.png', '/poster_result7.png', '/poster_result7.png', '/poster_result7.png']
 function initShare () {
+    addable = true
     var shareData = {
         title: '偷偷告诉你，这是我们的小秘密',
         desc: 'AC米兰120周年惊喜大奖藏在这里！',
@@ -43,6 +44,7 @@ var browser = {
 function getShareNum () {
     commonAjax('/api/user/share', 'POST', '', function (result) {
         if (result.success) {
+            addable = false
         } else {
             alert(result.err.message);
         }
@@ -86,7 +88,7 @@ function nativeShareSvc (command) {
 function initPosterPage (params) {
     acResult = parseInt(getCookie('rewardResult') || 1)
     initShare()
-    $("#posterResult").attr('src', 'http://q2n8bxfpk.bkt.clouddn.com/img'+list[acResult])
+    $("#posterResult").attr('src', 'http://q2n8bxfpk.bkt.clouddn.com/img' + list[acResult])
 
     $('#page-poster .close_btn').click(function () {
         getData();
@@ -95,9 +97,11 @@ function initPosterPage (params) {
     var timeOutEvent
     $("#posterResult").on({
         touchstart: function (e) {
-            timeOutEvent = setTimeout(function () {
-                getShareNum()
-            }, 600)
+            if (addable) {
+                timeOutEvent = setTimeout(function () {
+                    getShareNum()
+                }, 600)
+            }
         },
         touchmove: function (e) {
             clearTimeout(timeOutEvent)
