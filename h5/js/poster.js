@@ -86,7 +86,7 @@ function nativeShareSvc (command) {
 function initPosterPage (params) {
     acResult = parseInt(getCookie('rewardResult') || 1)
     initShare()
-    $("#posterResult").attr('src', 'http://q2n8bxfpk.bkt.clouddn.com/img/'+list[acResult])
+    $("#posterResult").attr('src', 'http://q2n8bxfpk.bkt.clouddn.com/img'+list[acResult])
 
     $('#page-poster .close_btn').click(function () {
         getData();

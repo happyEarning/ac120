@@ -184,22 +184,26 @@ function initMainPage () {
         } else if (!acUserAddress) {
             alert('请输入收获地址');
             return;
-        } else {
-            var params = {
-                name: acUserName,
-                address: acUserAddress,
-                recordId: recordId
-            };
-            $('#submitBtn').attr('disabled', true);
-            commonAjax('/api/user/record', 'POST', params, function (result) {
-                if (result.success) {
-                    showPosterPage()
-                } else {
-                    alert(result.err.message)
-                }
-                $('#submitBtn').removeAttr('disabled')
-            })
+        } 
+
+        var isConfirm = confirm('个人信息确认后不可更改，请确保无误，以便我们将奖品寄送到您所留地址')
+        if(!isConfirm){
+            return
         }
+        var params = {
+            name: acUserName,
+            address: acUserAddress,
+            recordId: recordId
+        };
+        $('#submitBtn').attr('disabled', true);
+        commonAjax('/api/user/record', 'POST', params, function (result) {
+            if (result.success) {
+                showPosterPage()
+            } else {
+                alert(result.err.message)
+            }
+            $('#submitBtn').removeAttr('disabled')
+        })
     });
 
     $('#page-main #closeBtn').click(function () {
