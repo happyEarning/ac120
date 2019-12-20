@@ -10,7 +10,7 @@ body{
     background: url("../img/trumpet.png") no-repeat center center/ contain;
     position: absolute;
     top: 0.3rem;
-    right: 0.3rem;
+    right: 0.1rem;
     z-index: 9999;
     display: block!important;
 }
