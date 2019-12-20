@@ -91,7 +91,10 @@ function getLottery (result) {
                 // 停止音效，播放背景音乐
                 $('.card-music')[0].pause()
                 $('.card-music')[0].currentTime = 0
-                $('.bg-music')[0].play()
+
+                if($('.trumpet').css('opacity')==1){
+                    $('.bg-music')[0].play()
+                }
             }, 700)
         }, 700)
     }, 700);
@@ -116,18 +119,18 @@ function renAnimation () {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    var audio_ = document.getElementById('bg-music')
     function audioAutoPlay () {
-        var audio_ = document.getElementById('bg-music')
         document.addEventListener("WeixinJSBridgeReady", function () {
             audio_.play()
         }, false)
     }
-    $('body').one('touchstart', function (params) {
-        setTimeout(() => {
-            var audio_ = document.getElementById('bg-music')
-            audio_.play()
-        }, 200);
-    })
+    audio_.play()
+    setTimeout(function(){
+        if(audio_.paused){
+            $('.trumpet').css('opacity','0.4')
+        }
+    },500)
     audioAutoPlay()
 })
 
@@ -210,6 +213,17 @@ function initMainPage () {
         mainClose()
         getData()
     })
+
+    $('.trumpet').click(function(){
+        var audio_ = document.getElementById('bg-music')
+        if(audio_.paused){
+            $(this).css('opacity','1')
+            audio_.play()
+        }else{
+            $(this).css('opacity','0.4')
+            audio_.pause()
+        }
+    })
 }
 
 function mainClose (params) {
@@ -233,3 +247,4 @@ $(document).ready(function () {
     renAnimation()
     initMainPage()
 })
+

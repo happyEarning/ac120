@@ -65,10 +65,7 @@ function shareByNavigator (command) {
         navigator.share({
             title: 'AC米兰120周年活动',
             url: 'https://project.sdsinfotech.com/ACM120/index.html'
-        }).then(() => {
-            console.log('Thanks for sharing!');
-        })
-            .catch(console.error);
+        });
 
     } else {
         getShareNum();
