@@ -116,7 +116,6 @@ function renAnimation () {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    var audio_ = document.getElementById('bg-music')
     function audioAutoPlay () {
         var audio_ = document.getElementById('bg-music')
         document.addEventListener("WeixinJSBridgeReady", function () {

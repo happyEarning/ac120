@@ -1,8 +1,8 @@
 var nativeShare = new NativeShare()
 var acResult = 1;
 
-var list = ['', '/poster_result1.png', './poster_result2.png', '/poster_result3.png', '/poster_result4.png', '/poster_result7.png', '/poster_result7.png', '/poster_result7.png']
-function initShare() {
+var list = ['', '/poster_result1.png', '/poster_result2.png', '/poster_result3.png', '/poster_result4.png', '/poster_result7.png', '/poster_result7.png', '/poster_result7.png']
+function initShare () {
     var shareData = {
         title: '偷偷告诉你，这是我们的小秘密',
         desc: 'AC米兰120周年惊喜大奖藏在这里！',
@@ -54,7 +54,7 @@ if (ua.match(/MicroMessenger/i) == "micromessenger") {//在微信中打开
 }
 
 function shareByNavigator (command) {
-  //获取判断用的对象
+    //获取判断用的对象
     if (ua.match(/MicroMessenger/i) == "micromessenger") {//在微信中打开
         alert('请长按图片分享给好友或分享到朋友圈')
         return;
@@ -83,7 +83,7 @@ function nativeShareSvc (command) {
     }
 }
 
-function initPosterPage(params) {
+function initPosterPage (params) {
     acResult = parseInt(getCookie('rewardResult') || 1)
     initShare()
     $("#posterResult").attr('src', 'http://q2n8bxfpk.bkt.clouddn.com/img/'+list[acResult])
