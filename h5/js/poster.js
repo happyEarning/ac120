@@ -110,3 +110,17 @@ function initPosterPage (params) {
     });
 }
 
+var u = navigator.userAgent
+// 微博浏览器 && pc浏览器更新海报长按分享提示
+const isIOS =  !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) //ios终端
+const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1
+const isWeibo = ua.match(/WeiBo/i) == "weibo"
+
+console.log(isIOS,isAndroid)
+if(!isIOS && !isAndroid){
+    $('#page-poster .ans_img_tips').html('分享多得一次抽卡机会')
+}
+if(isAndroid && isWeibo){
+    $('#page-poster .ans_img_tips').html('分享多得一次抽卡机会')
+}
+
