@@ -5,7 +5,7 @@
     max-width: 500px;
     margin: 0 auto;
     box-sizing: border-box;
-    background: url(../img/bg.jpg) no-repeat;
+    background: url(http://q2n8bxfpk.bkt.clouddn.com/img/bg.jpg) no-repeat;
     background-size: 100% 100%;
     color: #fff;
     overflow-x: hidden;
@@ -27,7 +27,7 @@
     max-width: 500px;
     margin: 0 auto;
     box-sizing: border-box;
-    background: url(../img/bg2.jpg) no-repeat;
+    background: url(http://q2n8bxfpk.bkt.clouddn.com/img/bg2.jpg) no-repeat;
     background-size: 100% 100%;
     color: #fff;
     overflow-x: hidden;
@@ -428,7 +428,7 @@ input[type=checkbox] {
     position: absolute;
     top: 0;
     left: 0;
-    background: url(../img/bg.jpg) no-repeat;
+    background: url(http://q2n8bxfpk.bkt.clouddn.com/img/bg.jpg) no-repeat;
     background-size: 100% 100%;
     width: 100%;
     min-height: 100%;
@@ -490,34 +490,6 @@ input[type=checkbox] {
 
 .card_result_box img {
     width: 100%;
-}
-
-.card_result1 {
-    background-image: url(../img/result1.png);
-}
-
-.card_result2 {
-    background-image: url(../img/result2.png);
-}
-
-.card_result3 {
-    background-image: url(../img/result3.png);
-}
-
-.card_result4 {
-    background-image: url(../img/result4.png);
-}
-
-.card_result5 {
-    background-image: url(../img/result7.png);
-}
-
-.card_result6 {
-    background-image: url(../img/result7.png);
-}
-
-.card_result7 {
-    background-image: url(../img/result7.png);
 }
 
 .card2 {
@@ -650,13 +622,6 @@ input[type=checkbox] {
     border-radius: 20px;
 }
 
-.poster_bg .poster_code {
-    width: 1.44rem;
-    height: 1.44rem;
-    margin: .53rem auto;
-    background: url(../img/erweima.png) no-repeat;
-    background-size: 100% 100%;
-}
 
 .poster_bg .poster_list {
     width: 5rem;

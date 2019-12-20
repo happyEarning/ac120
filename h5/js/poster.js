@@ -1,7 +1,7 @@
 var nativeShare = new NativeShare()
 var acResult = 1;
 
-var list = ['', './img/poster_result1.png', './img/poster_result2.png', './img/poster_result3.png', './img/poster_result4.png', './img/poster_result7.png', './img/poster_result7.png', './img/poster_result7.png']
+var list = ['', '/poster_result1.png', './poster_result2.png', '/poster_result3.png', '/poster_result4.png', '/poster_result7.png', '/poster_result7.png', '/poster_result7.png']
 function initShare() {
     var shareData = {
         title: '偷偷告诉你，这是我们的小秘密',
@@ -86,7 +86,7 @@ function nativeShareSvc (command) {
 function initPosterPage(params) {
     acResult = parseInt(getCookie('rewardResult') || 1)
     initShare()
-    $("#posterResult").attr('src', list[acResult])
+    $("#posterResult").attr('src', 'http://q2n8bxfpk.bkt.clouddn.com/img/'+list[acResult])
 
     $('#page-poster .close_btn').click(function () {
         getData();
