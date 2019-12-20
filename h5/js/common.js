@@ -13,7 +13,7 @@ function setCookie (name, value, expireDays) {
  * @param name   [必须] cookie名称
  */
 function getCookie (name) {
-    let value = window.sessionStorage.getItem(name)
+    var value = window.sessionStorage.getItem(name)
     if (value) {
         return value
     } else {

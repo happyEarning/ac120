@@ -141,7 +141,7 @@ module.exports.lottery = {
         rewardData = rewardData ? JSON.parse(rewardData) : {}
         // 如果还有奖品 并且抽中了
         if (rewardData['5'] || rewardData['6'] || rewardData['7']) {
-          let tempRandomIndex = getRandomIndex(300)
+          let tempRandomIndex = getRandomIndex(1000)
           // 抽中奖品
           if (rewardData[tempRandomIndex]) {
             randomIndex = tempRandomIndex
@@ -188,7 +188,7 @@ const nameMap = {
   3: 'AC米兰120周年荣耀时刻线上限量纪念卡牌B',
   4: 'AC米兰120周年荣耀时刻线上限量纪念卡牌C',
   5: 'AC米兰120周年官方限量珍藏吉祥物玩偶主场款',
-  6: 'AC米兰120周年官方限量珍藏吉祥物玩偶主场款',
+  6: 'AC米兰120周年官方限量珍藏吉祥物玩偶客场款',
   7: 'AC米兰120周年官方稀有珍藏吉祥物玩偶一对',
 }
 
@@ -247,6 +247,7 @@ module.exports.record = {
     },
   ]
 }
+
 
 // 分享接口：
 module.exports.share = {
@@ -448,9 +449,9 @@ module.exports.reset = {
         }
       ]
 
-      rewards.forEach(item => {
-        client.set(item.key, JSON.stringify(item.data))
-      })
+      // rewards.forEach(item => {
+      //   client.set(item.key, JSON.stringify(item.data))
+      // })
       next()
     },
   ]

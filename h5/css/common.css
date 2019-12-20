@@ -23,10 +23,14 @@ body{
     background-size: 100% 100%;
     color: #fff;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+.indPage{
+    
 }
 
 .audio {
-    opacity: 0;
+    display: none;;
     position: absolute;
     z-index: -999;
     height: 0;
@@ -413,13 +417,9 @@ input[type=checkbox] {
 }
 
 .game_content {
-    padding-bottom: 3.09rem;
 }
 
 .game_footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
     width: 100%;
     height: 3.09rem;
     background: #000;
