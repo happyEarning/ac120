@@ -5,36 +5,34 @@ var WEBURL = '';
  * @param value  [必须]cookie名称值
  * @param expireDays [可选]默认1天 过期时间(天) 0.01大概25分钟 s
  */
-function setCookie(name, value, expireDays) {
-    expireDays = expireDays ? expireDays = 1 : expireDays;
-    var d = new Date();
-    d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = name + "=" + value + "; " + expires + "; path=/";
+function setCookie (name, value, expireDays) {
+    window.sessionStorage.setItem(name, value)
 }
 /**
  * 获取cookie内容
  * @param name   [必须] cookie名称
  */
-function getCookie(name) {
-    var arr,
-        reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-    if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
-    else return null;
+function getCookie (name) {
+    let value = window.sessionStorage.getItem(name)
+    if (value) {
+        return value
+    } else {
+        return null
+    }
 }
 /**
  * 删除cookie
  * @param name  [必须]cookie名称
  */
-function delCookie(name) {
-    setCookie(name, "", -1);
+function delCookie (name) {
+    window.sessionStorage.removeItem(name);
 }
 
 /**
  * 获取URL参数
  * @param name   [必须] 参数名称
  */
-function getQueryString(name) {
+function getQueryString (name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return decodeURI(r[2]);
@@ -51,7 +49,7 @@ function getQueryString(name) {
  * @param sync:       [可选] 同步(True/False)     {默认:false 异步}
  * @param headers:    [可选] 请求头部添加参数 默认带有token
  */
-function commonAjax(url, type, paramter, success, error, sync, headers) {
+function commonAjax (url, type, paramter, success, error, sync, headers) {
     if (!url) {
         alert("URL出错");
         return;

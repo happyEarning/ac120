@@ -1,5 +1,8 @@
 var rewardResult;
 var rewardTexts = {
+    '2': '荣耀时刻线上限量纪念卡牌A',
+    '3': '荣耀时刻线上限量纪念卡牌B',
+    '4': '荣耀时刻线上限量纪念卡牌C',
     '5': '官方限量珍藏吉祥物玩偶主场款',
     '6': '官方限量珍藏吉祥物玩偶客场款',
     '7': '官方稀有珍藏吉祥物玩偶一对'
@@ -11,6 +14,7 @@ function getData () {
         // debugger
         if (result.success) {
             if (result.user) {
+                $('#page-main').show().siblings('div').hide()
                 setCookie('acUserInfo', JSON.stringify(result.user));
                 setCookie('lotteryTimes', result.user.times);
                 var lotteryTimes = result.user.times ? result.user.times : 0;
@@ -19,7 +23,7 @@ function getData () {
                 $('.bg2').hide();
                 $('#indPage').show();
             } else {
-                window.location.href = 'register.html';
+                $('#page-register').show().siblings('div').hide()
             }
         }
     })
@@ -60,6 +64,7 @@ function getLottery (result) {
         $('.ans_content').hide().eq(0).show();
     } else if (result > 1 && result < 5) {
         $('.ans_content').hide().eq(1).show();
+        $('.record_text2').text(rewardTexts[result.toString()])
     } else {
         var acUserInfo = getCookie('acUserInfo');
         if (acUserInfo) {
@@ -111,39 +116,44 @@ function renAnimation () {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    var audio_ = document.getElementById('bg-music')
     function audioAutoPlay () {
         var audio_ = document.getElementById('bg-music')
         document.addEventListener("WeixinJSBridgeReady", function () {
             audio_.play()
         }, false)
     }
+    $('body').one('touchstart', function (params) {
+        setTimeout(() => {
+            var audio_ = document.getElementById('bg-music')
+            audio_.play()
+        }, 200);
+    })
     audioAutoPlay()
 })
-$(document).ready(function () {
-    // 初始化
-    renderCardList();
-    if (document.referrer.indexOf('register.html') === -1 && document.referrer.indexOf('poster.html') === -1) {
-        renAnimation();
-    } else {
-        getData();
-    }
 
+function initMainPage () {
     $(document).on('click', '#cardList li', function () {
         var _this = $(this);
-
-        var acUserInfo = getCookie('acUserInfo');
-        acUserInfo = JSON.parse(acUserInfo);
-        console.log(acUserInfo)
-        if (acUserInfo.times === 0 && acUserInfo.todayTimes >= 10) {
-            alert('今日10次机会已用完，请明日继续参与活动')
+        try {
+            var acUserInfo = getCookie('acUserInfo');
+            acUserInfo = JSON.parse(acUserInfo);
+            if (acUserInfo.times === 0 && acUserInfo.todayTimes >= 10) {
+                alert('今日10次机会已用完，请明日继续参与活动')
+                return
+            }
+            if (acUserInfo.times === 0) {
+                showPosterPage()
+                return
+            }
+            $('.bg-music')[0].pause()
+            $('.card-music')[0].currentTime = 0
+            $('.card-music')[0].play()
+        } catch (e) {
+            alert(JSON.stringify(e))
             return
         }
-        if (acUserInfo.times === 0) {
-            window.location.href = 'poster.html';
-        }
-        $('.bg-music')[0].pause()
-        $('.card-music')[0].currentTime = 0
-        $('.card-music')[0].play()
+
         // _this.removeClass('ac').siblings().addClass('ac');
         commonAjax('/api/user/lottery', 'GET', '', function (result) {
             if (result.success) {
@@ -156,48 +166,67 @@ $(document).ready(function () {
                 alert(result.err.message);
             }
         })
-        //分享按钮
-        $('.share_btn').click(function () {
-            window.location.href = 'poster.html?res=' + rewardResult;
-        });
-
-        // 提交
-        $('#submitBtn').click(function () {
-            var acUserName = $('#acUserName').val().trim();
-            var acUserAddress = $('#acUserAddress').val().trim();
-            var recordId = $('#recordId').val();
-            if (!acUserName) {
-                alert('请输入姓名');
-                return;
-            } else if (!acUserAddress) {
-                alert('请输入收获地址');
-                return;
-            } else {
-                var params = {
-                    name: acUserName,
-                    address: acUserAddress,
-                    recordId: recordId
-                };
-                $('#submitBtn').attr('disabled', true);
-                commonAjax('/api/user/record', 'POST', params, function (result) {
-                    if (result.success) {
-                        window.location.href = 'poster.html';
-                    } else {
-                        alert(result.err.message);
-                    }
-                    $('#submitBtn').attr('disabled', false);
-                })
-            }
-        });
-
-        $('#closeBtn').click(function () {
-            $('#mask').hide();
-            $('#cardList li').removeClass('ac');
-            $('#card_box').removeClass('reback');
-            $('.card_item').removeClass('add');
-            $('#ansBox').hide();
-            $('.light_bright').hide();
-            getData();
-        });
+       
     })
+
+     //分享按钮
+     $('.share_btn').click(function () {
+        showPosterPage()
+    });
+
+    // 提交
+    $('#submitBtn').click(function () {
+        var acUserName = $('#acUserName').val().trim();
+        var acUserAddress = $('#acUserAddress').val().trim();
+        var recordId = $('#recordId').val();
+        if (!acUserName) {
+            alert('请输入姓名');
+            return;
+        } else if (!acUserAddress) {
+            alert('请输入收获地址');
+            return;
+        } else {
+            var params = {
+                name: acUserName,
+                address: acUserAddress,
+                recordId: recordId
+            };
+            $('#submitBtn').attr('disabled', true);
+            commonAjax('/api/user/record', 'POST', params, function (result) {
+                if (result.success) {
+                    showPosterPage()
+                } else {
+                    alert(result.err.message)
+                }
+                $('#submitBtn').removeAttr('disabled')
+            })
+        }
+    });
+
+    $('#page-main #closeBtn').click(function () {
+        mainClose()
+        getData()
+    })
+}
+
+function mainClose (params) {
+    $('#mask').hide()
+    $('#cardList li').removeClass('ac')
+    $('#card_box').removeClass('reback')
+    $('.card_item').removeClass('add')
+    $('#ansBox').hide()
+    $('.light_bright').hide()
+}
+
+function showPosterPage () {
+    mainClose()
+    initPosterPage()
+    $('#page-poster').show().siblings('div').hide()
+}
+
+$(document).ready(function () {
+    // 初始化
+    renderCardList()
+    renAnimation()
+    initMainPage()
 })

@@ -15,6 +15,7 @@
     opacity: 0;
     position: absolute;
     z-index: -999;
+    height: 0;
 }
 
 .bg2 {
@@ -432,7 +433,8 @@ input[type=checkbox] {
     width: 100%;
     min-height: 100%;
     z-index: 99;
-    /* overflow: hidden; */
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .card_box {
@@ -556,7 +558,7 @@ input[type=checkbox] {
     width: 8rem;
     margin: .67rem auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .ans_btn_tips,
@@ -564,6 +566,7 @@ input[type=checkbox] {
     position: relative;
     padding-top: .43rem;
     color: #B6B6B6;
+    text-align: center;
 }
 
 .ans_btn_tips:before {
@@ -678,6 +681,7 @@ input[type=checkbox] {
 .poster_share_bar {
     display: flex;
     width: 100%;
+    margin-bottom: 20px;
     /* justify-content: space-between; */
 }
 
@@ -725,4 +729,13 @@ input[type=checkbox] {
     height: 54%;
     transform: translate(-50%, 0);
     opacity: 0;
+}
+
+#page-register,
+#page-poster{
+    display: none;
+}
+.poster-view{
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
