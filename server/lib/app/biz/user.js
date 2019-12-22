@@ -276,13 +276,61 @@ module.exports.share = {
     },
   ]
 }
+// 到处用户列表
+module.exports.exportCount = {
+  method: 'get',
+  middlewares: [
+    (req, res, next) => {
+      if (req.query.key !== '7GyRqXCL6L9L6468') {
+        next(new Error('没有权限'))
+      } else {
+        next()
+      }
+    },
+    async (req, res, next) => {
+      let list = await Reward.aggregate([{
+        $project: {
+          day: { $substr: [{ "$add": ["$createdAt", 28800000] }, 0, 10] },//时区数据校准，8小时换算成毫秒数为8*60*60*1000=288000后分割成YYYY-MM-DD日期格式便于分组
+          "userRef": 1 //设置原有price字段可用，用于计算总价
+        },
+      }, {
+        $group: {
+          _id: {
+            data:"$day",
+            userRef:'$userRef'
+          },
+          count: {$sum:1}
+        }
+      },
+      {
+        $group: {
+          _id: "$_id.data",
+          count: {$sum:1}
+        }
+      }])
+
+      let book = XLSX.utils.book_new()
+      let data = [['日期', '参与人数']]
+      const userList = await User.find()
+      const rows = list.map(item => ([item._id, item.count]))
+      var sheet = XLSX.utils.aoa_to_sheet(data.concat(rows))
+      XLSX.utils.book_append_sheet(book, sheet, 'Sheet1')
+
+      let fileName = path.join(config.download.tmpDir, `参与列表_${moment().format('YYYYMMDDHHmmss')}.xlsx`)
+      XLSX.writeFile(book, fileName)
+      res.download(fileName, (err) => {
+        // fs.remove(fileName)
+      })
+    },
+  ]
+}
 
 // 到处用户列表
 module.exports.exportUser = {
   method: 'get',
   middlewares: [
     (req, res, next) => {
-      if (req.query.key !== 'ac120AdminKey') {
+      if (req.query.key !== '7GyRqXCL6L9L6468') {
         next(new Error('没有权限'))
       } else {
         next()
@@ -310,7 +358,7 @@ module.exports.exportRecord = {
   method: 'get',
   middlewares: [
     (req, res, next) => {
-      if (req.query.key !== 'ac120AdminKey') {
+      if (req.query.key !== '7GyRqXCL6L9L6468') {
         next(new Error('没有权限'))
       } else {
         next()
@@ -343,7 +391,7 @@ module.exports.reset = {
   method: 'get',
   middlewares: [
     (req, res, next) => {
-      if (req.query.key !== 'ac120AdminKey') {
+      if (req.query.key !== '7GyRqXCL6L9L6468') {
         next(new Error('没有权限'))
       } else {
         next()

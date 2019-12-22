@@ -46,7 +46,7 @@
     管理员key:<input autofocus id="key">
   </div>
   <div class="btns">
-    <button id="reset">重置奖品数据按钮</button>
+    <button id="reset">导出参与列表Excel</button>
     <button id="exportUser">导出用户Excel</button>
     <button id="exportRecord">导出中奖记录Excel</button>
   </div>
@@ -56,20 +56,7 @@
 
   $('#reset').click(function(){
     const value = $('#key').val()
-    $.ajax({
-        url:'/api/user/reset',
-        contentType: "application/json; charset=utf-8",
-        data: {
-          key:value
-        },
-        dataType: "json",
-        success: function (result) {
-          alert('重置成功')
-        },
-        error:function(){
-          alert('无效的key')
-        }
-      })
+    window.open('/api/user/exportCount?key='+value)
   })
   $('#exportUser').click(function(){
     const value = $('#key').val()
