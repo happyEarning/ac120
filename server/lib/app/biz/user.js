@@ -141,7 +141,7 @@ module.exports.lottery = {
         rewardData = rewardData ? JSON.parse(rewardData) : {}
         // 如果还有奖品 并且抽中了
         if (rewardData['5'] || rewardData['6'] || rewardData['7']) {
-          let tempRandomIndex = getRandomIndex(1000)
+          let tempRandomIndex = getRandomIndex(300)
           // 抽中奖品
           if (rewardData[tempRandomIndex]) {
             randomIndex = tempRandomIndex
@@ -299,20 +299,21 @@ module.exports.exportCount = {
             data:"$day",
             userRef:'$userRef'
           },
-          count: {$sum:1}
+          count: {$sum:1},
+          dayCount: {$sum:1}
         }
       },
       {
         $group: {
           _id: "$_id.data",
-          count: {$sum:1}
+          count: {$sum:1},
+          dayCount:{$sum:'$dayCount'}
         }
       }])
 
       let book = XLSX.utils.book_new()
-      let data = [['日期', '参与人数']]
-      const userList = await User.find()
-      const rows = list.map(item => ([item._id, item.count]))
+      let data = [['日期', '参与人数','参与人次']]
+      const rows = list.map(item => ([item._id, item.count,item.dayCount]))
       var sheet = XLSX.utils.aoa_to_sheet(data.concat(rows))
       XLSX.utils.book_append_sheet(book, sheet, 'Sheet1')
 
@@ -458,7 +459,7 @@ module.exports.reset = {
         {
           key: '2019-12-27',
           data: {
-            5: 0,
+            5: 1,
             6: 0,
             7: 0
           }
