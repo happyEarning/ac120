@@ -32,7 +32,7 @@ function getData () {
 function renderCardList () {
     var html = '';
     for (var i = 0; i < 9; i++) {
-        html += '<li><img src="http://q2n8bxfpk.bkt.clouddn.com/img/card_back.png" alt=""></li>';
+        html += '<li><img src="http://q46lyhntp.bkt.clouddn.com/img/card_back.png" alt=""></li>';
     }
     $('#cardList').append(html);
 }
@@ -80,7 +80,7 @@ function getLottery (result) {
     setTimeout(function () {
         $('#mask').show();
         $('.card_box').addClass('reback');
-        $('.card_result_box').attr('src', 'http://q2n8bxfpk.bkt.clouddn.com/img' + list[result]);
+        $('.card_result_box').attr('src', 'http://q46lyhntp.bkt.clouddn.com/img' + list[result]);
         setTimeout(function () {
             $('.card1').addClass('add');
             $('.card2').addClass('add');
