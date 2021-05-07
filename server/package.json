@@ -35,7 +35,7 @@
     "promise": "^8.0.2",
     "redis": "^2.8.0",
     "response-time": "^2.3.2",
-    "ua-parser-js": "^0.7.17",
+    "ua-parser-js": "^0.7.24",
     "uuid": "^3.2.1",
     "xlsx": "^0.15.3"
   },
