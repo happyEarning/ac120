@@ -37,7 +37,7 @@
     "response-time": "^2.3.2",
     "ua-parser-js": "^0.7.17",
     "uuid": "^3.2.1",
-    "xlsx": "^0.15.3"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "css-loader": "^0.28.8",
