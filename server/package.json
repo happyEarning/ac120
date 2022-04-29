@@ -6,7 +6,7 @@
     "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json"
   },
   "dependencies": {
-    "async": "^2.5.0",
+    "async": "^2.6.4",
     "bluebird": "^3.5.3",
     "body-parser": "^1.17.2",
     "connect": "^3.6.2",
